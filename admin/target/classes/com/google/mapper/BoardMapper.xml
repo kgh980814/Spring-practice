@@ -5,7 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.google.mapper.BoardMapper">
 
 <select id="getList" resultType="com.google.domain.BoardVO">
-SELECT * FROM tbl_board ORDER BY bno DESC
+<![CDATA[  
+SELECT * FROM tbl_board WHERE bno > 0 ORDER BY bno DESC
+]]>
 </select>
 
 <insert id="insert" >
