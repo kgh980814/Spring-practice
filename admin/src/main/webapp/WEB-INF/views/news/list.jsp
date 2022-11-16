@@ -9,7 +9,7 @@
 	  <div class="row">
 	  	<div class="col-md-12">
 			<div class="widget p-lg">
-				<h4 class="m-b-lg">게시판</h4>
+				<h4 class="m-b-lg">뉴스</h4>
 				
 				<div style="text-align:right;" class="form-group"><a href="register" class="btn btn-warning btn-sm" role="btn">New Register</a></div>
 				

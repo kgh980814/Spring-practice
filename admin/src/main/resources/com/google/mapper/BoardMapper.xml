@@ -10,6 +10,21 @@ SELECT * FROM tbl_board WHERE bno > 0 ORDER BY bno DESC
 ]]>
 </select>
 
+<select id="getListWithPaging" resultType="com.google.domain.BoardVO">
+<![CDATA[  
+SELECT * FROM tbl_board 
+WHERE bno > 0 ORDER BY bno DESC
+LIMIT #{skip}, #{amount} 
+]]>
+</select>
+
+<select id="getListTotal" resultType="int">
+<![CDATA[  
+SELECT count(*) FROM tbl_board 
+WHERE bno > 0 
+]]>
+</select>
+
 <insert id="insert" >
 INSERT INTO tbl_board (title, content, writer)
 VALUES(#{title}, #{content}, #{writer})
@@ -33,6 +48,11 @@ DELETE FROM tbl_board WHERE bno = #{bno}
 
 <update id="update">
 UPDATE tbl_board SET title=#{title},content=#{content},updatedate =now()
+WHERE bno = #{bno}
+</update>
+
+<update id="updateHit">
+UPDATE tbl_board SET hit = hit + 1
 WHERE bno = #{bno}
 </update>
 </mapper>

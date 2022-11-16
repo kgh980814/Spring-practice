@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.google.domain.BoardVO;
+import com.google.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -23,6 +24,18 @@ public class BoardMapperTests {
 	public void testGetList() {
 		mapper.getList().forEach(board -> log.info(board));
 	}
+
+	//@Test
+	public void testGetListWithPaging() {
+		Criteria cri = new Criteria(1,20);
+		mapper.getListWithPaging(cri).forEach(board -> log.info(board));
+	}
+	
+		@Test
+		public void testGetListTotal() {
+			int total = mapper.getListTotal();
+			log.info("[DEG]" + total);
+		}
 
 	// @Test
 	public void testInsert() {
@@ -43,7 +56,7 @@ public class BoardMapperTests {
 		log.info(vo);
 	}
 
-	 @Test
+	// @Test
 	public void testRead() {
 		mapper.read(42);
 
@@ -54,10 +67,11 @@ public class BoardMapperTests {
 		mapper.delete(43);
 
 	}
-	//@Test
+
+	// @Test
 	public void testUpdate() {
-		BoardVO vo =new BoardVO();
-		vo.setBno(42L);//L:type(long)
+		BoardVO vo = new BoardVO();
+		vo.setBno(42L);// L:type(long)
 		vo.setTitle("변경제목");
 		vo.setContent("변경내용");
 		mapper.update(vo);

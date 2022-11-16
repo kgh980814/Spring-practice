@@ -8,7 +8,7 @@
 		<div class="col-md-12">
 			<div class="widget">
 				<header class="widget-header">
-					<h4 class="widget-title">Board Modify</h4>
+					<h4 class="widget-title">News Modify</h4>
 				</header>
 				<!-- .widget-header -->
 				<hr class="widget-separator">

@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
 	<link rel="shortcut icon" sizes="196x196" href="/admin/resources/assets/images/goodchoice.png">
-	<title>Infinity - Bootstrap Admin Template</title>
+	<title>관리자 페이지</title>
 	
 	<link rel="stylesheet" href="/admin/resources/libs/bower/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/admin/resources/libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
@@ -61,7 +61,8 @@
     </button>
 
     <a href="/admin/" class="navbar-brand">
-     <img src="/admin/resources/assets/images/logo.png" alt="">
+    	<span class="brand-icon"><i class="fa fa-gg"></i></span>
+        <span class="brand-name">ADMIN</span>
     </a>
   </div><!-- .navbar-header -->
   
