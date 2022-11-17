@@ -13,7 +13,9 @@
 				<!-- .widget-header -->
 				<hr class="widget-separator">
 				<div class="widget-body">
-				
+					<div class="m-b-lg">
+						
+					</div>
 					<form method="post" class="form-horizontal" action="">
 						<input type="hidden" name="bno" value="${board.bno }"/>
 						

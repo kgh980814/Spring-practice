@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
 	<link rel="shortcut icon" sizes="196x196" href="/admin/resources/assets/images/goodchoice.png">
-	<title>관리자 페이지</title>
+	<title>Infinity - Bootstrap Admin Template</title>
 	
 	<link rel="stylesheet" href="/admin/resources/libs/bower/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/admin/resources/libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
@@ -19,7 +19,6 @@
 	<link rel="stylesheet" href="/admin/resources/assets/css/bootstrap.css">
 	<link rel="stylesheet" href="/admin/resources/assets/css/core.css">
 	<link rel="stylesheet" href="/admin/resources/assets/css/app.css">
-
 	<!-- endbuild -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
 	<script src="/admin/resources/libs/bower/breakpoints.js/dist/breakpoints.min.js"></script>
@@ -60,9 +59,9 @@
       <span class="zmdi zmdi-hc-lg zmdi-search"></span>
     </button>
 
-    <a href="/admin/" class="navbar-brand">
-    	<span class="brand-icon"><i class="fa fa-gg"></i></span>
-        <span class="brand-name">ADMIN</span>
+    <a href="/admin" class="navbar-brand">
+      <span class="brand-icon"><i class="fa fa-gg"></i></span>
+      <span class="brand-name">ADMIN</span>
     </a>
   </div><!-- .navbar-header -->
   
@@ -225,15 +224,15 @@
   <div class="menubar-scroll">
     <div class="menubar-scroll-inner">
       <ul class="app-menu">
-        <li class="has-submenu ">
-          <a href="javascript:void(0) " class="submenu-toggle">
-            <i class="fa fa-bullhorn"></i>
+        <li class="has-submenu">
+          <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon fa fa-bullhorn zmdi-hc-lg"></i>
             <span class="menu-text">게시판</span>
             <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
           </a>
           <ul class="submenu">
             <li><a href="/admin/board/list"><span class="menu-text">게시판</span></a></li>
-             <li><a href="/admin/news/list"><span class="menu-text">뉴스</span></a></li>
+            <li><a href="/admin/news/list"><span class="menu-text">뉴스</span></a></li>
           </ul>
         </li>
         

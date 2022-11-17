@@ -32,7 +32,8 @@ DELETE FROM tbl_news WHERE bno = #{bno}
 </delete>
 
 <update id="update">
-UPDATE tbl_news SET title=#{title},content=#{content},updatedate =now()
+UPDATE tbl_news SET title = #{title}, content = #{content}, updatedate = now()
 WHERE bno = #{bno}
 </update>
+
 </mapper>

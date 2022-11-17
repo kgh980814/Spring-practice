@@ -14,7 +14,7 @@
 				<hr class="widget-separator">
 				<div class="widget-body">
 					<div class="m-b-lg">
-					
+						
 					</div>
 					<form method="post" class="form-horizontal" action="">
 						<div class="form-group">
@@ -28,14 +28,14 @@
 							<label for="textarea1" class="col-sm-3 control-label">Content:</label>
 							<div class="col-sm-9">
 								<textarea class="form-control input-sm" name="content" id="content"
-									placeholder="Your content..."required="required"></textarea>
+									placeholder="Your content..." required="required"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Writer:</label>
 							<div class="col-sm-9">
 								<input type="text" class="form-control input-sm" name="writer" id="writer"
-									placeholder="Writer"required="required">
+									placeholder="Writer" required="required">
 							</div>
 						</div>
 						

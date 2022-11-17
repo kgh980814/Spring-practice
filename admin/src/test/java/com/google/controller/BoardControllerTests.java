@@ -17,9 +17,10 @@ import lombok.extern.log4j.Log4j;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
-						,"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
+					,"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 @Log4j
-@WebAppConfiguration	//controller를 위한 테스트( 애플리케이션 컨텍스트의 웹 버전을 생성하는 데 사용되는 클래스 레벨 어노테이션)
+//controller를 위한 test
+@WebAppConfiguration
 public class BoardControllerTests {
 
 	@Setter(onMethod_ = {@Autowired})
@@ -27,43 +28,46 @@ public class BoardControllerTests {
 	
 	private MockMvc mockMvc;
 	
-	@Before//테스트하기전에 먼저 수행하라
+	@Before
 	public void setup() {
-		this.mockMvc =MockMvcBuilders.webAppContextSetup(ctx).build();
+		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
+	
 	//@Test
 	public void testList() throws Exception {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
 				.andReturn().getModelAndView().getModelMap()
 				);
 	}
+	
 	//@Test
 	public void testRegister() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
 				.param("title", "테스트 제목")
-				.param("content","테스트 내용")
+				.param("content", "테스트 내용")
 				.param("writer", "user00"))
 		.andReturn().getModelAndView().getViewName();
 	}
+	
 	//@Test
 	public void testGet() throws Exception {
 		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/read")
-				.param("bno","39")
+				.param("bno", "41")
 				).andReturn().getModelAndView().getModelMap()
 				);
 	}
 	//@Test
 	public void testRemove() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/board/remove")
-				.param("bno","45")
+				.param("bno", "41")
 				).andReturn().getModelAndView().getViewName();
 	}
 	@Test
 	public void testModify() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.post("/board/modify")
-				.param("bno", "36")
+				.param("bno", "37")
 				.param("title", "테스트 수정 제목")
-				.param("content","테스트 수정 내용")
+				.param("content", "테스트 수정 내용")
 				.param("writer", "user00"))
 		.andReturn().getModelAndView().getViewName();
 	}

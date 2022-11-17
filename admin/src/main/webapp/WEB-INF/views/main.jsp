@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <%@ include file="includes/header.jsp" %>
+
   <div class="wrap">
 	<section class="app-content">
 		<div class="row">
 			<div class="col-md-6 col-sm-6">
 				<div class="widget p-md clearfix">
 					<div class="pull-left">
-						<h3 class="widget-title">Admin page</h3>
+						<h3 class="widget-title">Welcome to Infinity</h3>
 						<small class="text-color">Number of views</small>
 					</div>
 					<span class="pull-right fz-lg fw-500 counter" data-plugin="counterUp">102</span>
@@ -96,9 +98,9 @@
 				<div class="widget row no-gutter p-lg">						
 					<div class="col-md-5 col-sm-5">
 						<div>
-							<h3 class="widget-title fz-lg text-primary m-b-lg">Portfolio</h3>
-							<p class="m-b-lg">This page is the Administrator page.We are currently preparing, so please wait a moment.</p>
-							
+							<h3 class="widget-title fz-lg text-primary m-b-lg">Sales in 2014</h3>
+							<p class="m-b-lg">Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C users after installed base benefits</p>
+							<p class="fs-italic">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic eum alias est vitae, obcaecati?</p>
 						</div>
 					</div>
 
@@ -330,7 +332,7 @@
 								<div class="media">
 									<div class="media-left">
 										<div class="avatar avatar-sm avatar-circle">
-											<img src="/resources/assets/images/217.jpg" alt="">
+											<img src="/admin/resources/assets/images/217.jpg" alt="">
 										</div>
 									</div>
 									<div class="media-body">
@@ -344,7 +346,7 @@
 								<div class="media">
 									<div class="media-left">
 										<div class="avatar avatar-sm avatar-circle">
-											<img src="/resources/assets/images/218.jpg" alt="">
+											<img src="/admin/resources/assets/images/218.jpg" alt="">
 										</div>
 									</div>
 									<div class="media-body">
@@ -358,7 +360,7 @@
 								<div class="media">
 									<div class="media-left">
 										<div class="avatar avatar-sm avatar-circle">
-											<img src="/resources/assets/images/219.jpg" alt="">
+											<img src="/admin/resources/assets/images/219.jpg" alt="">
 										</div>
 									</div>
 									<div class="media-body">
@@ -372,7 +374,7 @@
 								<div class="media">
 									<div class="media-left">
 										<div class="avatar avatar-sm avatar-circle">
-											<img src="/resources/assets/images/215.jpg" alt="">
+											<img src="/admin/resources/assets/images/215.jpg" alt="">
 										</div>
 									</div>
 									<div class="media-body">
@@ -386,7 +388,7 @@
 								<div class="media">
 									<div class="media-left">
 										<div class="avatar avatar-sm avatar-circle">
-											<img src="/resources/assets/images/221.jpg" alt="">
+											<img src="/admin/resources/assets/images/221.jpg" alt="">
 										</div>
 									</div>
 									<div class="media-body">
@@ -410,7 +412,7 @@
 						<div class="streamline m-l-lg">
 							<div class="sl-item p-b-md">
 								<div class="sl-avatar avatar avatar-sm avatar-circle">
-									<img class="img-responsive" src="/resources/assets/images/221.jpg" alt="avatar"/>
+									<img class="img-responsive" src="/admin/resources/assets/images/221.jpg" alt="avatar"/>
 								</div><!-- .avatar -->
 								<div class="sl-content m-l-xl">
 									<h5 class="m-t-0"><a href="javascript:void(0)" class="m-r-xs theme-color">John Doe</a><small class="text-muted fz-sm">last month</small></h5>
@@ -420,7 +422,7 @@
 
 							<div class="sl-item p-b-md">
 								<div class="sl-avatar avatar avatar-sm avatar-circle">
-									<img class="img-responsive" src="/resources/assets/images/214.jpg" alt="avatar"/>
+									<img class="img-responsive" src="/admin/resources/assets/images/214.jpg" alt="avatar"/>
 								</div><!-- .avatar -->
 								<div class="sl-content m-l-xl">
 									<h5 class="m-t-0"><a href="javascript:void(0)" class="m-r-xs theme-color">Jane Doe</a><small class="text-muted fz-sm">last month</small></h5>
@@ -430,7 +432,7 @@
 
 							<div class="sl-item p-b-md">
 								<div class="sl-avatar avatar avatar-sm avatar-circle">
-									<img class="img-responsive" src="/resources/assets/images/217.jpg" alt="avatar"/>
+									<img class="img-responsive" src="/admin/resources/assets/images/217.jpg" alt="avatar"/>
 								</div><!-- .avatar -->
 								<div class="sl-content m-l-xl">
 									<h5 class="m-t-0"><a href="javascript:void(0)" class="m-r-xs theme-color">Sally Mala</a><small class="text-muted fz-sm">last month</small></h5>
@@ -440,7 +442,7 @@
 
 							<div class="sl-item p-b-md">
 								<div class="sl-avatar avatar avatar-sm avatar-circle">
-									<img class="img-responsive" src="/resources/assets/images/211.jpg" alt="avatar"/>
+									<img class="img-responsive" src="/admin/resources/assets/images/211.jpg" alt="avatar"/>
 								</div><!-- .avatar -->
 								<div class="sl-content m-l-xl">
 									<h5 class="m-t-0"><a href="javascript:void(0)" class="m-r-xs theme-color">Sara Adams</a><small class="text-muted fz-sm">last month</small></h5>
@@ -449,7 +451,7 @@
 							</div><!-- .sl-item -->
 							<div class="sl-item p-b-md">
 								<div class="sl-avatar avatar avatar-sm avatar-circle">
-									<img class="img-responsive" src="/resources/assets/images/214.jpg" alt="avatar"/>
+									<img class="img-responsive" src="/admin/resources/assets/images/214.jpg" alt="avatar"/>
 								</div><!-- .avatar -->
 								<div class="sl-content m-l-xl">
 									<h5 class="m-t-0"><a href="javascript:void(0)" class="m-r-xs theme-color">Sandy Doe</a><small class="text-muted fz-sm">last month</small></h5>
@@ -533,4 +535,6 @@
 		</div><!-- .row -->
 	</section><!-- #dash-content -->
 </div><!-- .wrap -->
+
+
 <%@ include file="includes/footer.jsp" %>

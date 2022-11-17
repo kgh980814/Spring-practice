@@ -16,28 +16,34 @@ import lombok.extern.log4j.Log4j;
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @Log4j
 public class BoardMapperTests {
-
-	@Setter(onMethod_ = { @Autowired })
+	
+	@Setter(onMethod_ = {@Autowired})
 	private BoardMapper mapper;
-
-	// @Test
-	public void testGetList() {
-		mapper.getList().forEach(board -> log.info(board));
-	}
-
+	
 	//@Test
-	public void testGetListWithPaging() {
-		Criteria cri = new Criteria(1,20);
-		mapper.getListWithPaging(cri).forEach(board -> log.info(board));
+	public void testGetList() {
+		mapper.getList().forEach(board->log.info(board));
 	}
 	
-		@Test
-		public void testGetListTotal() {
-			int total = mapper.getListTotal();
-			log.info("[DEG]" + total);
-		}
-
-	// @Test
+	@Test
+	public void testGetListWithPaging() {
+		Criteria cri = new Criteria(1, 20);
+		cri.setType("TCW");
+		cri.setKeyword("새글");
+		
+		mapper.getListWithPaging(cri).forEach(board->log.info(board));
+	}
+	
+	//@Test
+	public void testGetListTotal() {
+		Criteria cri = new Criteria(1, 20);
+		cri.setType("T");
+		cri.setKeyword("새글");
+		
+		int total = mapper.getListTotal(cri);
+	}
+	
+	//@Test
 	public void testInsert() {
 		BoardVO vo = new BoardVO();
 		vo.setTitle("새글제목");
@@ -45,8 +51,8 @@ public class BoardMapperTests {
 		vo.setWriter("user00");
 		mapper.insert(vo);
 	}
-
-	// @Test
+	
+	//@Test
 	public void testInsertLastId() {
 		BoardVO vo = new BoardVO();
 		vo.setTitle("새글제목");
@@ -55,25 +61,29 @@ public class BoardMapperTests {
 		mapper.insertLastId(vo);
 		log.info(vo);
 	}
-
-	// @Test
+	
+	//@Test
 	public void testRead() {
-		mapper.read(42);
-
+		mapper.read(38);
 	}
-
-	// @Test
+	
+	//@Test
 	public void testDelete() {
-		mapper.delete(43);
-
+		mapper.delete(39);
 	}
-
-	// @Test
+	
+	//@Test
 	public void testUpdate() {
 		BoardVO vo = new BoardVO();
-		vo.setBno(42L);// L:type(long)
-		vo.setTitle("변경제목");
-		vo.setContent("변경내용");
+		vo.setBno(38L);
+		vo.setTitle("변경 제목");
+		vo.setContent("변경 내용");
+		
 		mapper.update(vo);
 	}
 }
+
+
+
+
+

@@ -17,10 +17,11 @@
 				<hr class="widget-separator">
 				<div class="widget-body">
 					<div class="m-b-lg">
-				
+					
 					</div>
 					<form method="post" class="form-horizontal" action="">
-					<input type="hidden" name="bno" value="${board.bno}"/>
+					<input type="hidden" name="bno" value="${board.bno }"/>
+					
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 							<div class="col-sm-9">
@@ -40,12 +41,13 @@
 								<c:out value="${board.writer }"></c:out>
 							</div>
 						</div>
-							<div class="form-group">
+						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Regdate:</label>
 							<div class="col-sm-9">
-								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.regdate}"></fmt:formatDate>
+								<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${board.regdate }"></fmt:formatDate>
 							</div>
 						</div>
+						
 						<div class="row">
 							<div class="col-sm-9 col-sm-offset-3">
 								<a href="modify?bno=${board.bno }" class="btn btn-danger btn-sm">Modify Button</a>
@@ -66,12 +68,11 @@
 <script>
 $(document).ready(function(){
 	$("#btn_remove").on("click", function(){
-		
 		if(confirm("정말로 삭제하시겠습니까?")){
 			$("form").attr("action","remove");
-			$("form").submit(); 
+			$("form").submit();
 		}
-		console.log("삭제버튼 눌림");
+		//console.log("삭제버튼 눌림");
 	});
 });
 </script>

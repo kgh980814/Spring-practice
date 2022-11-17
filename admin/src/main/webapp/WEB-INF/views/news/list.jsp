@@ -10,8 +10,10 @@
 	  	<div class="col-md-12">
 			<div class="widget p-lg">
 				<h4 class="m-b-lg">뉴스</h4>
-				
-				<div style="text-align:right;" class="form-group"><a href="register" class="btn btn-warning btn-sm" role="btn">New Register</a></div>
+				<p class="m-b-lg docs">
+					Create responsive tables by wrapping any <code>.table</code> in <code>.table-responsive</code> to make them scroll horizontally on small devices (under 768px). When viewing on anything larger than 768px wide, you will not see any difference in these tables.
+				</p>
+				<div style="text-align:right;" class="form-group"><a href="register" class="btn btn-pink btn-sm" role="btn">New Register</a></div>
 				
 				<div class="table-responsive">
 					<table class="table">

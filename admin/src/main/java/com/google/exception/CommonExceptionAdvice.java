@@ -14,17 +14,19 @@ import lombok.extern.log4j.Log4j;
 public class CommonExceptionAdvice {
 	
 	@ExceptionHandler(Exception.class)
-	public String except(Exception ex,Model model) {
-		
-		log.error("Exception..."+ex.getMessage());
-		model.addAttribute("exception",ex);
+	public String except(Exception ex, Model model) {
+		log.error("Exception..." + ex.getMessage());
+		model.addAttribute("excetion", ex);
 		log.error(model);
-		return "error_page";
+		return "error_page";		
 	}
 	
+	/**
+	 * 404페이지
+	 */
 	@ExceptionHandler(NoHandlerFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public String handle404(NoHandlerFoundException ex) {
-		return "custom404";		
+		return "custom404";
 	}
 }

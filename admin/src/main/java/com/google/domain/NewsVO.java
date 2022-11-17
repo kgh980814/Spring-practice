@@ -13,4 +13,5 @@ public class NewsVO {
 	private String writer;
 	private Date regdate;
 	private Date updateDate;
+	
 }
