@@ -38,11 +38,11 @@ public class ReplyMapperTests {
 	
 	//@Test
 	public void testRead() {
-		mapper.read(2);
+		mapper.read(2L);
 	}
 	//@Test
 	public void testRemove() {
-		mapper.delete(1);
+		mapper.delete(1L);
 	}
 	
 	//@Test
