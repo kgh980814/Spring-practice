@@ -4,6 +4,7 @@ import java.util.List;
 
 
 import com.google.domain.Criteria;
+import com.google.domain.ReplyPageDTO;
 import com.google.domain.ReplyVO;
 
 public interface ReplyService {
@@ -16,5 +17,6 @@ public interface ReplyService {
 	
 	public int update(ReplyVO vo);
 	
-	public List<ReplyVO> getListWithPaging(Criteria cri,Long bno);
+	public ReplyPageDTO getListWithPaging(Criteria cri, Long bno);
+
 }

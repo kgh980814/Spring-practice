@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
 	<link rel="shortcut icon" sizes="196x196" href="/admin/resources/assets/images/goodchoice.png">
-	<title>Infinity - Bootstrap Admin Template</title>
+	<title>ADMIN</title>
 	
 	<link rel="stylesheet" href="/admin/resources/libs/bower/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/admin/resources/libs/bower/material-design-iconic-font/dist/css/material-design-iconic-font.css">
@@ -235,7 +235,16 @@
             <li><a href="/admin/news/list"><span class="menu-text">뉴스</span></a></li>
           </ul>
         </li>
-        
+         <li class="has-submenu">
+          <a href="javascript:void(0)" class="submenu-toggle">
+            <i class="menu-icon fa fa-sticky-note zmdi-hc-lg"></i>
+            <span class="menu-text">업무</span>
+            <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+          </a>
+          <ul class="submenu">
+            <li><a href="/admin/report/list"><span class="menu-text">업무보고서</span></a></li>
+          </ul>
+        </li>
         
       </ul><!-- .app-menu -->
     </div><!-- .menubar-scroll-inner -->

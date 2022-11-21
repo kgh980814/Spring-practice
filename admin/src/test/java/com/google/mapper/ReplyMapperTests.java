@@ -27,7 +27,7 @@ public class ReplyMapperTests {
 		log.info("ReplyMapper....");
 	}
 	
-	@Test
+	//@Test
 	public void testInsert() {
 		ReplyVO vo = new ReplyVO();
 		vo.setBno(3L);
@@ -55,10 +55,16 @@ public class ReplyMapperTests {
 	
 	@Test
 	public void testList() {
-		Criteria cri = new Criteria();
-		List<ReplyVO> replies = mapper.getListWithPaging(cri, 3L);
+		Criteria cri = new Criteria(2,10);
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, 127L);
 		
 		replies.forEach(reply -> log.info(reply));
+	}
+	
+	//@Test
+	public void testGetCount() {
+		int res =mapper.getCountByBno(127L);
+		log.info(""+res);
 	}
 }
 

@@ -23,5 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT * FROM tbl_reply
 	WHERE bno = #{bno} 
 	ORDER BY rno ASC
+	LIMIT #{cri.skip}, #{cri.amount}
+	</select>
+	
+	<select id="getCountByBno" resultType="int">
+	SELECT count(*) FROM tbl_reply
+	WHERE bno = #{bno} 
 	</select>
 </mapper>
