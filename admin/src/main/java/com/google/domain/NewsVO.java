@@ -13,5 +13,6 @@ public class NewsVO {
 	private String writer;
 	private Date regdate;
 	private Date updateDate;
-	
+	private int hit;//조회수
+	private int replyCnt;// 댓글수
 }

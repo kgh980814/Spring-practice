@@ -2,6 +2,8 @@ package com.google.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.google.domain.BoardVO;
 import com.google.domain.Criteria;
 
@@ -25,5 +27,9 @@ public interface BoardMapper {
 	public void delete(long bno);
 	
 	public void update(BoardVO vo);
+	
+	public void updateReplyCnt(@Param("bno") long bno,
+			@Param("amount") int amount);
+	
 	
 }

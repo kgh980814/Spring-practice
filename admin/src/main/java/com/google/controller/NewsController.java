@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.domain.Criteria;
 import com.google.domain.NewsVO;
+import com.google.domain.PageDTO;
 import com.google.service.NewsService;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +25,11 @@ public class NewsController {
 	private NewsService service;
 	
 	@GetMapping("/list")
-	public void list(Model model) {
-		model.addAttribute("list", service.getList());
+	public void list(Criteria cri, Model model) {
+		model.addAttribute("list", service.getList(cri));
+
+		int total = service.getListTotal(cri);
+		model.addAttribute("pageMaker", new PageDTO(cri, total ));
 	}
 	
 	@GetMapping("/register")
@@ -37,7 +42,7 @@ public class NewsController {
 		
 		service.register(news);
 		
-		// news/list로 이동하면서 result값(글번호)을 전달함.
+		// board/list로 이동하면서 result값(글번호)을 전달함.
 		rttr.addFlashAttribute("result", news.getBno());
 		
 		return "redirect:/news/list";		
@@ -50,7 +55,7 @@ public class NewsController {
 	
 	/*
 	 * @GetMapping("/modify") public void modify(@RequestParam("bno") long bno,
-	 * Model model) { model.addAttribute("news", service.get(bno)); }
+	 * Model model) { model.addAttribute("board", service.get(bno)); }
 	 */
 	
 	
@@ -67,7 +72,7 @@ public class NewsController {
 		
 		service.modify(news);
 		
-		// news/list로 이동하면서 result값(글번호)을 전달함.
+		// board/list로 이동하면서 result값(글번호)을 전달함.
 		rttr.addFlashAttribute("result", news.getBno());
 		
 		return "redirect:/news/list";		

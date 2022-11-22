@@ -36,7 +36,11 @@
 						<tr>
 							<td><c:out value="${board.bno }"></c:out></td>
 							<td><a href="get?bno=<c:out value="${board.bno }"></c:out>">
-							<c:out value="${board.title }"></c:out></a></td>
+							<c:out value="${board.title }"></c:out></a>
+							<c:if test="${board.replyCnt gt 0}">
+								<span class="badge badge-danger"><c:out value="${board.replyCnt }"></c:out></span>
+							</c:if>
+							</td>
 							<td><c:out value="${board.writer }"></c:out></td>
 							<td><fmt:formatDate value="${board.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 							<td><fmt:formatDate value="${board.updateDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -62,7 +66,7 @@
 							<option value="TC">제목+내용</option>
 						</select>
 						<input type="text" name="keyword" class="form-control">
-						<button class="btn btn-warning">검색</button>
+						<button class="btn btn-warning"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</form>
 					</div>
 					<div class="col-md-6">				

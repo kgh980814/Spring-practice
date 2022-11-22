@@ -14,4 +14,5 @@ public class BoardVO {
 	private Date regdate;
 	private Date updateDate;
 	private int hit;//조회수
+	private int replyCnt;// 댓글수
 }

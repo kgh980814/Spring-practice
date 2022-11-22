@@ -56,7 +56,7 @@
 							<option value="TC">제목+내용</option>
 						</select>
 						<input type="text" name="keyword" class="form-control">
-						<button class="btn btn-warning">검색</button>
+						<button class="btn btn-warning"><i class="fa fa-search" aria-hidden="true"></i></button>
 					</form>
 					</div>
 					<div class="col-md-6">				
