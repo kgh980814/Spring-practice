@@ -14,16 +14,16 @@
 			accept="image/*">
 	</div>
 	<button id="uploadBtn">Upload</button>
-	
-	
+
+
 	<div class="uploadResult">
 		<ul>
-			
+
 		</ul>
 	</div>
-	
-	
-	
+
+
+
 	<script>
 	var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp)$");
 	var maxSize = 1024 * 1024 * 5;//5MB
@@ -44,13 +44,46 @@
 	}
 	function showUploadFile(uploadResultArr){
 		let str ="";
+		
 		$(uploadResultArr).each(function(i,obj){
-			str += "<li>" +obj.fileName+ "</li>";
-		});
+			//str += "<li>" +obj.fileName+ "</li>";
+			//obj.image //이미지일경우에 처리
+			var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+			var fileRealPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
+			
+			str += "<li><a href='download?fileName=" + fileRealPath + "'>";
+			str += "<img src='display?fileName=" + fileCallPath + "'></a>";
+			str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='image'>X</span></li>";
+		});//원본 파일
 		
 		$(".uploadResult ul").append(str);
 	}
 	$(document).ready(function() {
+		
+		$(".uploadResult").on("click", "span", function(){
+			let targetRealfile = $(this).data("realfile");//원본파일
+			let targetfile = $(this).data("file");//썸네일파일
+			let type = $(this).data("type");
+			let span = $(this);
+			$.ajax({
+				url: 'deleteFile',
+				data:{
+					fileRealName:targetRealfile,
+					fileName:targetfile,
+					type:type
+				},
+				dataType:"text",
+				type:"POST",
+				success:function(result){
+					console.log(result);
+					if("deleted" == result){
+						span.parent().remove();
+					}
+				}
+			});
+		});
+		
+		
 		
 		var cloneObj = $(".uploadDiv").clone();//클론 현재 업로드 Div를 복사
 		

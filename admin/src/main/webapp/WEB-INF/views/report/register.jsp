@@ -45,8 +45,8 @@
 									placeholder="Writer" required="required">
 							</div>
 						</div>
-						
-						<div class="row">
+				
+						<div class="form-group">
 							<div class="col-sm-9 col-sm-offset-3">
 								<button type="submit" class="btn btn-danger btn-sm">Submit Button</button>
 								<button type="reset" class="btn btn-danger btn-sm">Reset Button</button>

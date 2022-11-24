@@ -373,6 +373,11 @@ function getList() {
 			  pageNum = $(this).attr("href");
 			  getList();
 		  });
+		 
+		 var bno = '${board.bno }';
+			$.getJSON("./getAttachList", {bno:bno}, function(arr){
+				console.log(arr);
+			});		 
 	});
 </script>
 

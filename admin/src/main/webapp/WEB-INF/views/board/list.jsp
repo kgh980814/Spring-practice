@@ -38,7 +38,7 @@
 							<td><a href="get?bno=<c:out value="${board.bno }"></c:out>">
 							<c:out value="${board.title }"></c:out></a>
 							<c:if test="${board.replyCnt gt 0}">
-								<span class="badge badge-danger"><c:out value="${board.replyCnt }"></c:out></span>
+								<span class="badge badge-warning"><c:out value="${board.replyCnt }"></c:out></span>
 							</c:if>
 							</td>
 							<td><c:out value="${board.writer }"></c:out></td>

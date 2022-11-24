@@ -60,7 +60,7 @@ INSERT INTO tbl_board (title, content, writer)
 VALUES(#{title}, #{content}, #{writer})
 </insert>
 
-<insert id="insertLastId" >
+<insert id="insertLastId" ><!-- 등록하고 아이디값을 받는거 -->
 <selectKey keyProperty="bno" order="AFTER" resultType="long">
 SELECT last_insert_id()
 </selectKey>

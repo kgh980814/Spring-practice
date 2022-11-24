@@ -2,6 +2,7 @@ package com.google.service;
 
 import java.util.List;
 
+import com.google.domain.BoardAttachVO;
 import com.google.domain.BoardVO;
 import com.google.domain.Criteria;
 
@@ -20,5 +21,7 @@ public interface BoardService {
 	public void remove(long bno);//delete
 
 	public void modify(BoardVO vo);//update
+	
+	public List<BoardAttachVO> getAttachList(long bno);//첨부파일목록
 	
 }

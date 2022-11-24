@@ -1,6 +1,7 @@
 package com.google.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -15,4 +16,6 @@ public class BoardVO {
 	private Date updateDate;
 	private int hit;//조회수
 	private int replyCnt;// 댓글수
+	
+	private List<BoardAttachVO> attachList;//1:N관계
 }
