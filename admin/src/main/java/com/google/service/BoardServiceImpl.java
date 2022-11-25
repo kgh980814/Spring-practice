@@ -20,7 +20,7 @@ public class BoardServiceImpl implements BoardService {
 	
 	private BoardMapper mapper;
 	
-	private BoardAttachMapper attachmapper;
+	private BoardAttachMapper attachMapper;
 
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
@@ -42,7 +42,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		vo.getAttachList().forEach(attach -> {
 			attach.setBno(vo.getBno());
-			attachmapper.insert(attach);
+			attachMapper.insert(attach);
 		});
 	}
 	@Transactional
@@ -51,21 +51,36 @@ public class BoardServiceImpl implements BoardService {
 		mapper.updateHit(bno);//조회수 증가
 		return mapper.read(bno);
 	}
-
+	
+	@Transactional
 	@Override
-	public void remove(long bno) {
-		mapper.delete(bno);		
+	public boolean remove(long bno) {
+		//attach(첨부파일)mapper를 먼저 지우고 boardmapper를 지움
+		
+		attachMapper.deleteAll(bno);
+		
+		return mapper.delete(bno) == 1;		
 	}
 
 	@Override
 	public void modify(BoardVO vo) {
+		//첨부파일 테이블내용 삭제
+		attachMapper.deleteAll(vo.getBno());
+
+		if(vo.getAttachList() == null || vo.getAttachList().size() <=0 ) {
+			return; //빈값이거나 0보다작으면 수행을 멈춤.
+		}
+		vo.getAttachList().forEach(attach -> {
+			attach.setBno(vo.getBno());
+			attachMapper.insert(attach);
+		});
 		mapper.update(vo);
 	}
 
 	@Override
 	public List<BoardAttachVO> getAttachList(long bno) {
 		
-		return attachmapper.findByBno(bno);//글번호에 따른 첨부파일 목록
+		return attachMapper.findByBno(bno);//글번호에 따른 첨부파일 목록
 	}
 
 

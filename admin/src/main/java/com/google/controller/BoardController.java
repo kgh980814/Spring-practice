@@ -1,5 +1,9 @@
 package com.google.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -30,64 +34,101 @@ import lombok.extern.log4j.Log4j;
 public class BoardController {
 
 	private BoardService service;
-	
+
 	@GetMapping("/list")
 	public void list(Criteria cri, Model model) {
 		model.addAttribute("list", service.getList(cri));
 
 		int total = service.getListTotal(cri);
-		model.addAttribute("pageMaker", new PageDTO(cri, total ));
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-	
+
 	@GetMapping("/register")
 	public void register() {
-		
+
 	}
-	
+
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
-		
+
 		service.register(board);
-		
+
 		// board/list로 이동하면서 result값(글번호)을 전달함.
 		rttr.addFlashAttribute("result", board.getBno());
-		
-		return "redirect:/board/list";		
+
+		return "redirect:/board/list";
 	}
-	
-	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") long bno, Model model) {
+
+	@GetMapping({ "/get", "/modify" })
+	public void get(@RequestParam("bno") long bno, Model model,Criteria cri) {
 		model.addAttribute("board", service.get(bno));
+		model.addAttribute("pageMaker", new PageDTO(cri));
 	}
-	
-	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+	@GetMapping(value = "/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno){//첨부파일 목록
-		
-		return new ResponseEntity<List<BoardAttachVO>>(service.getAttachList(bno),HttpStatus.OK);
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(Long bno) {// 첨부파일 목록
+
+		return new ResponseEntity<List<BoardAttachVO>>(service.getAttachList(bno), HttpStatus.OK);
 	}
 	/*
 	 * @GetMapping("/modify") public void modify(@RequestParam("bno") long bno,
 	 * Model model) { model.addAttribute("board", service.get(bno)); }
 	 */
-	
-	
+
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") long bno) {
-		
-		service.remove(bno);
-		
-		return "redirect:/board/list";
-		
+	public String remove(@RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr) {
+
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
+
+		if(service.remove(bno)) {// 해당되는글이 지워졌으면
+			deleteFiles(attachList);
+			
+			rttr.addFlashAttribute("result","success");//삭제 성공.
+		}
+
+		return "redirect:/board/list"+cri.getListLink();
+
 	}
+
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
-		
+
 		service.modify(board);
-		
+
 		// board/list로 이동하면서 result값(글번호)을 전달함.
 		rttr.addFlashAttribute("result", board.getBno());
-		
-		return "redirect:/board/list";		
+
+		return "redirect:/board/list";
+	}
+
+	/**
+	 * 파일 삭제 처리
+	 */
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		if (attachList == null || attachList.size() == 0) {
+			return;
+		}
+
+		attachList.forEach(attach -> {
+
+			try {
+				Path file = Paths.get(
+						"D:/upload/" + attach.getUploadPath() + "/" + attach.getUuid() + "_" + attach.getFileName());
+
+				Files.deleteIfExists(file);// 해당파일이 존재하면 삭제해라
+
+				// 이미지일경우 썸네일삭제
+				if (Files.probeContentType(file).startsWith("image")) {
+					Path thumNail = Paths.get("D:/upload/" + attach.getUploadPath() + "/s_" + attach.getUuid() + "_"
+							+ attach.getFileName());
+					Files.delete(thumNail);
+				}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 }

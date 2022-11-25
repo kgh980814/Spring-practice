@@ -75,7 +75,7 @@
 </div>
 <!-- class="wrap" -->
 <script>
-var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp)$");
+var regex = new RegExp("(.*?)\.(jpg|png|gif|bmp|zip|hwp)$");
 var maxSize = 1024 * 1024 * 5;//5MB
 function checkExtension(fileName, fileSize){//지역변수선언
 
@@ -111,7 +111,7 @@ function showUploadFile(uploadResultArr){
 		}else{
 			var fileRealPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
 			
-			str += "<li><a href='../download?fileName=" + fileRealPath + "'>";
+			str += "<li data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
 			str += "파일아이콘";
 			str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='file'>X</span></li>";
 			
@@ -125,6 +125,13 @@ function showUploadFile(uploadResultArr){
 $(document).ready(function(){
 	$("button[type=submit]").on("click",function(e){
 		e.preventDefault();
+		let title = $("#title").val();
+		let content = $("#content").val();
+		
+		if(title == ''){
+			alert("제목을 입력하세요");
+			return;
+		}
 		let str = "";
 		$(".uploadResult ul li").each(function(i,obj){
 			console.log(obj);

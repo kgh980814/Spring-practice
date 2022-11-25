@@ -24,7 +24,7 @@ public interface BoardMapper {
 	
 	public void updateHit(long bno);
 	
-	public void delete(long bno);
+	public int delete(long bno);
 	
 	public void update(BoardVO vo);
 	

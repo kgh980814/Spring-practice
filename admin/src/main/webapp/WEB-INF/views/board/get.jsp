@@ -19,6 +19,11 @@
 					<div class="m-b-lg"></div>
 					<form method="post" class="form-horizontal" action="">
 						<input type="hidden" name="bno" value="${board.bno }" />
+						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }" />
+						<input type="hidden" name="amount" value="${pageMaker.cri.amount }" />
+						<input type="hidden" name="type" value="${pageMaker.cri.type }" />
+						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword }" />
+						
 
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
@@ -48,10 +53,10 @@
 									value="${board.regdate }"></fmt:formatDate>
 							</div>
 						</div>
-
+				
 						<div class="row">
 							<div class="col-sm-9 col-sm-offset-3">
-								<a href="modify?bno=${board.bno }" class="btn btn-danger btn-sm">Modify
+								<a href="modify${pageMaker.cri.listLink }&bno=${board.bno }" class="btn btn-danger btn-sm">Modify
 									Button</a>
 								<button type="button" id="btn_remove"
 									class="btn btn-danger btn-sm">Remove Button</button>
@@ -61,6 +66,15 @@
 						</div>
 					</form>
 				</div>
+				
+					<div class="mail-item">
+						<div style="height: 32px; padding-top: 9px;">Files</div>
+						<div class="uploadResult">
+							<ul style="display:flex">
+					
+							</ul>
+						</div>
+					</div>
 				<!-- .widget-body -->
 			</div>
 			<!-- .widget -->
@@ -377,6 +391,32 @@ function getList() {
 		 var bno = '${board.bno }';
 			$.getJSON("./getAttachList", {bno:bno}, function(arr){
 				console.log(arr);
+				
+				let str = "";
+				$(arr).each(function(i, attach){
+					var fileRealPath 
+					= encodeURIComponent(attach.uploadPath + "/"+attach.uuid + "_" + attach.fileName);
+					
+					//그림파일
+					if(attach.fileType){				
+						var fileCallPath 
+						= encodeURIComponent(attach.uploadPath + "/s_"+attach.uuid + "_" + attach.fileName);
+						
+						str += '<li style="padding:5px;">';
+						str += '<a href="../download?fileName='+fileRealPath+'">';
+						str += '<img src="../display?fileName='+fileCallPath+'">';
+						str += '</a>';
+						str += '</li>';
+						
+					} else {
+						str += '<li style="padding:5px;">';
+						str += '<a href="../download?fileName='+fileRealPath+'">';
+						str += '<i class="fa fa-file-archive-o" aria-hidden="true"></i>';
+						str += '</a>';
+						str += '</li>';
+					}
+				});
+				$(".uploadResult ul").html(str);//html형식으로 추가함  html.()
 			});		 
 	});
 </script>

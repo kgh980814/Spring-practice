@@ -16,6 +16,12 @@ public class PageDTO {
 	private int total;//전체 글수
 	private Criteria cri;//페이징
 	
+	public PageDTO(Criteria cri) {
+		super();
+		this.cri = cri;
+	}
+	
+	
 	public PageDTO(Criteria cri, int total) {
 		super();
 		this.total = total;
@@ -32,6 +38,10 @@ public class PageDTO {
 		this.prev = this.startPage > 1;
 		this.next = this.endPage < realEnd;
 	}
+
+
+
+
 	
 	
 }

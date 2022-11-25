@@ -18,7 +18,7 @@ public interface BoardService {
 	
 	public BoardVO get(long bno);//read
 	
-	public void remove(long bno);//delete
+	public boolean remove(long bno);//delete
 
 	public void modify(BoardVO vo);//update
 	

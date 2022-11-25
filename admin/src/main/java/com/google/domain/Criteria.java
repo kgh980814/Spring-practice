@@ -1,5 +1,7 @@
 package com.google.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,5 +43,18 @@ public class Criteria {
 	public String[] getTypeArr() {
 		return type == null?new String[] {}:type.split("");
 	}
-	
+	/**
+	 * 삭제시 현재페이지 및 검색어 유지
+	 * ?pageNum=?&amount=10&type=&keyword=
+	 * UriComponentsBuilder
+	 */
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+				.queryParam("pageNum", this.getPageNum())
+				.queryParam("amount", this.getAmount())
+				.queryParam("type", this.getType())
+				.queryParam("keyword", this.getKeyword());
+		return builder.toUriString();
+		
+	}
 }

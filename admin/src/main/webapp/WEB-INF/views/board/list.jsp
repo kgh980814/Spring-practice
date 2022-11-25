@@ -35,7 +35,7 @@
 						<c:forEach items="${list }" var="board">
 						<tr>
 							<td><c:out value="${board.bno }"></c:out></td>
-							<td><a href="get?bno=<c:out value="${board.bno }"></c:out>">
+							<td><a href="get${pageMaker.cri.listLink }&bno=<c:out value="${board.bno }"></c:out>">
 							<c:out value="${board.title }"></c:out></a>
 							<c:if test="${board.replyCnt gt 0}">
 								<span class="badge badge-warning"><c:out value="${board.replyCnt }"></c:out></span>
@@ -124,6 +124,7 @@
 		  //console.log("BTN"+$(this).attr("href"));
 		  let href = $(this).attr("href");
 		  $("input[name=pageNum]").val(href);
+		  console.log(location.href == '');
 		  $("#frm").submit();
 	  });
   });
