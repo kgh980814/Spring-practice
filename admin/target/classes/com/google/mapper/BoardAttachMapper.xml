@@ -20,4 +20,9 @@ WHERE bno = #{bno}
 <delete id="deleteAll">
 DELETE FROM tbl_attach WHERE bno = #{bno}
 </delete>
+
+<select id="getOldFiles"  resultType="com.google.domain.BoardAttachVO">
+SELECT * FROM tbl_attach 
+WHERE uploadpath = (SELECT Date_Format(date_add(curdate(), interval -1 day),'%Y\%m\%d'))
+</select>
 </mapper>

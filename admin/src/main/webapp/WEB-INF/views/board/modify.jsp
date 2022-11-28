@@ -186,19 +186,19 @@ $(document).ready(function(){
 					var fileCallPath 
 					= encodeURIComponent(attach.uploadPath + "/s_"+attach.uuid + "_" + attach.fileName);
 					
-					str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
+					str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><a href='../download?fileName=" + fileRealPath + "'>";
 					str += '<a href="../download?fileName='+fileRealPath+'">';
 					str += '<img src="../display?fileName='+fileCallPath+'">';
 					str += '</a>';
-					str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='image' >X</span></li>";
+					str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='image'>X</span></li>";
 					str += '</li>';
 					
 				} else {
-					str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.image+"'><a href='../download?fileName=" + fileRealPath + "'>";
+					str += "<li style='padding:5px;' data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><a href='../download?fileName=" + fileRealPath + "'>";
 					str += '<a href="../download?fileName='+fileRealPath+'">';
 					str += '<i class="fa fa-save" aria-hidden="true"></i>';
 					str += '</a>';
-					str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='file' >X</span></li>";
+					str += "<span data-realFile='"+fileRealPath+"' data-file='"+fileCallPath+"' data-type='file'>X</span></li>";
 					str += '</li>';
 				}
 			});
