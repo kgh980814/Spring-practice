@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +43,8 @@ public class BoardController {
 		int total = service.getListTotal(cri);
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
-
+	
+	@PreAuthorize("isAuthenticated()")//로그인된 사용자
 	@GetMapping("/register")
 	public void register() {
 
@@ -75,9 +77,9 @@ public class BoardController {
 	 * @GetMapping("/modify") public void modify(@RequestParam("bno") long bno,
 	 * Model model) { model.addAttribute("board", service.get(bno)); }
 	 */
-
+	@PreAuthorize("principal.username == #writer")
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") long bno, Criteria cri, RedirectAttributes rttr,String writer) {
 
 		List<BoardAttachVO> attachList = service.getAttachList(bno);
 
@@ -90,7 +92,7 @@ public class BoardController {
 		return "redirect:/board/list"+cri.getListLink();
 
 	}
-
+	@PreAuthorize("principal.username == #board.writer")//로그인된 사용자와 작성자가 같으면
 	@PostMapping("/modify")
 	public String modify(BoardVO board, RedirectAttributes rttr) {
 

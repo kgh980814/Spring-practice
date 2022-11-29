@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ include file="../includes/header.jsp"%>
 
 <div class="wrap">
@@ -17,7 +18,9 @@
 						
 					</div>
 					<form id="frm" method="post" class="form-horizontal" action="">
+					
 						<input type="hidden" name="bno" value="${board.bno }"/>
+						<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post형식으로 값을 넘길때 무조건 csrf값을 넘겨줘야함 -->
 						
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
@@ -57,8 +60,13 @@
 						</div><!-- 첨부파일 END-->
 						<div class="form-group">
 							<div class="col-sm-9 col-sm-offset-3">
+							<sec:authentication property="principal" var="pinfo"/>
+							<sec:authorize access="isAuthenticated()">
+							<c:if test="${pinfo.username eq board.writer }">
 								<button type="submit" class="btn btn-danger btn-sm">Modify Button</button>
 								<a href="javascript:history.go(-2);" class="btn btn-danger btn-sm">List Button</a>
+								</c:if>
+								</sec:authorize>
 							</div>
 						</div>
 					</form>

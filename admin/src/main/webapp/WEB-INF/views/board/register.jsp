@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 
 <%@ include file="../includes/header.jsp"%>
 
@@ -17,6 +18,7 @@
 						
 					</div>
 					<form id="frm" method="post" class="form-horizontal" action="">
+					<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post형식으로 값을 넘길때 무조건 csrf값을 넘겨줘야함 -->
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Title:</label>
 							<div class="col-sm-9">
@@ -34,8 +36,9 @@
 						<div class="form-group">
 							<label for="exampleTextInput1" class="col-sm-3 control-label">Writer:</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control input-sm" name="writer" id="writer"
-									placeholder="Writer" required="required">
+								<input type="text" class="form-control input-sm" name="writer" id="writer" readonly="readonly"
+									placeholder="Writer" required="required" value="<sec:authentication property="principal.username"/>">
+									
 							</div>
 						</div>
 						

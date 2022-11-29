@@ -32,18 +32,18 @@
 		<div class="simple-page-form animated flipInY" id="login-form">
 	<h4 class="form-title m-b-xl text-center">Sign In With Your Infinity Account</h4>
 	<form method="post" action="login">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post로 값을 넘길때마다 csrf값을 넘겨줘야함 -->
+		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post형식으로 값을 넘길때 무조건 csrf값을 넘겨줘야함 -->
 		<div class="form-group">
-			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="UserName" value="admin">
+			<input id="sign-in-email" type="text" name="username" class="form-control" placeholder="UserName" value="">
 		</div>
 
 		<div class="form-group">
-			<input id="sign-in-password" type="password" name="password" class="form-control" placeholder="Password" value="admin">
+			<input id="sign-in-password" type="password" name="password" class="form-control" placeholder="Password" value="">
 		</div>
 
 		<div class="form-group m-b-xl">
-			<div class="checkbox checkbox-primary">
-				<input type="checkbox" id="keep_me_logged_in"/>
+			<div class="checkbox checkbox-warning">
+				<input type="checkbox" name="remember-me"id="keep_me_logged_in"/>
 				<label for="keep_me_logged_in">Keep me signed in</label>
 			</div>
 		</div>
