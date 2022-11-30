@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<sec:authorize access="isAnonymous()">
+<script>
+location.href="/admin/customLogin";
+</script>
+</sec:authorize>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +13,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 	<meta name="description" content="Admin, Dashboard, Bootstrap" />
-	<link rel="shortcut icon" sizes="196x196" href="/admin/resources/assets/images/goodchoice.png">
+	<link rel="shortcut icon" sizes="196x196" href="/admin/resources/assets/images/logo.png">
 	<title>ADMIN</title>
 	
 	<link rel="stylesheet" href="/admin/resources/libs/bower/font-awesome/css/font-awesome.min.css">
@@ -19,11 +25,13 @@
 	<link rel="stylesheet" href="/admin/resources/assets/css/bootstrap.css">
 	<link rel="stylesheet" href="/admin/resources/assets/css/core.css">
 	<link rel="stylesheet" href="/admin/resources/assets/css/app.css">
+	
 	<!-- endbuild -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,500,600,700,800,900,300">
 	<script src="/admin/resources/libs/bower/breakpoints.js/dist/breakpoints.min.js"></script>
 	<!-- build:js /admin/resources/assets/js/core.min.js -->
 	<script src="/admin/resources/libs/bower/jquery/dist/jquery.js"></script>
+
 	<script src="/admin/resources/libs/bower/jquery-ui/jquery-ui.min.js"></script>
 	<script src="/admin/resources/libs/bower/jQuery-Storage-API/jquery.storageapi.min.js"></script>
 	<script src="/admin/resources/libs/bower/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
@@ -173,11 +181,19 @@
 <aside id="menubar" class="menubar light">
   <div class="app-user">
     <div class="media">
+    
       <div class="media-left">
-        <div class="avatar avatar-md avatar-circle">
+      <sec:authorize access="isAuthenticated()">
+ 		 <div class="avatar avatar-md avatar-circle">
           <a href="javascript:void(0)"><img class="img-responsive" src="/admin/resources/assets/images/man-icon.png" alt="avatar"/></a>
-        </div><!-- .avatar -->
+    	
+         </div><!--.avatar -->
+         </sec:authorize>
+         <sec:authorize access="isAnonymous()">
+        <a href="/admin/customLogin"> <span class="m-r-xs"><i class="fa fa-power-off"></i></span>Login</a>
+        </sec:authorize>
       </div>
+      
       <div class="media-body">
         <div class="foldable">
           <h5><a href="javascript:void(0)" class="username">John Doe</a></h5>
@@ -189,7 +205,7 @@
               </a>
               <ul class="dropdown-menu animated flipInY">
                 <li>
-                  <a class="text-color" href="/index.html">
+                  <a class="text-color" href="/admin">
                     <span class="m-r-xs"><i class="fa fa-home"></i></span>
                     <span>Home</span>
                   </a>
@@ -208,11 +224,14 @@
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <a class="text-color" href="logout.html">
+                  <a class="text-color" href="javascript:void(0);$('#Logout').submit();">
                     <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
-                    <span>Home</span>
+                    <span>Logout</span>         
                   </a>
                 </li>
+                <form  id ="Logout" method="post" action="/admin/customLogout">
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post로 값을 넘길때마다 csrf값을 넘겨줘야함 해당값을 쓰지않을경우 security-context에서<security:csrf disabled="true"/> 작성-->
+			</form>
               </ul>
             </li>
           </ul>

@@ -147,7 +147,10 @@ $(document).ready(function(){
 		//console.log("submit");클릭 버튼 체크
 	});
 	
-	var cloneObj = $(".uploadDiv").clone();//클론 현재 업로드 Div를 복사
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+
+	
 	$(".uploadResult").on("click", "span", function(){
 		let targetRealfile = $(this).data("realfile");//원본파일
 		let targetfile = $(this).data("file");//썸네일파일
@@ -162,6 +165,9 @@ $(document).ready(function(){
 			},
 			dataType:"text",
 			type:"POST",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success:function(result){
 				console.log(result);
 				if("deleted" == result){
@@ -169,7 +175,6 @@ $(document).ready(function(){
 					
 					span.parent().remove();
 					
-					$(".uploadDiv").html(cloneObj.html());//파일선택 초기화
 				}
 			}
 		});
@@ -197,10 +202,12 @@ $(document).ready(function(){
 			contentType : false,
 			data : formData,
 			type : "POST",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success : function(result) {
 				/* console.log(result); */
-				
-				
+				$('#uploadFile').val('');
 				console.log(result);
 				//파일목록 출력
 				showUploadFile(result);

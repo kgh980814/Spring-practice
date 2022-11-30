@@ -263,6 +263,7 @@
 	<script src="/admin/resources/assets/js/plugins.js"></script>
 	<script src="/admin/resources/assets/js/app.js"></script>
 	<!-- endbuild -->
+	
 	<script src="/admin/resources/libs/bower/moment/moment.js"></script>
 	<script src="/admin/resources/libs/bower/fullcalendar/dist/fullcalendar.min.js"></script>
 	<script src="/admin/resources/assets/js/fullcalendar.js"></script>

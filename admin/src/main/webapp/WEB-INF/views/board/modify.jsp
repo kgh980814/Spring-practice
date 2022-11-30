@@ -148,6 +148,8 @@ $(document).ready(function(){
 		$(this).parent().remove();
 	});
 	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	$("input[type=file]").on("change",function(){
 		var formData = new FormData();//Form클래스안에 FORM 객체를 만들겠다.
@@ -170,6 +172,9 @@ $(document).ready(function(){
 			contentType : false,
 			data : formData,
 			type : "POST",
+			beforeSend: function(xhr){
+				xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+			},
 			success : function(result) {
 				/* console.log(result); */
 				$('#uploadFile').val('');

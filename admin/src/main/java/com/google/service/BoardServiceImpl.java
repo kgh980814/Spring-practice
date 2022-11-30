@@ -68,10 +68,13 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 		//첨부파일 테이블내용 삭제
+		attachMapper.deleteAll(vo.getBno());
+		
+		//첨부파일 있으면 등록
 		if(vo.getAttachList() == null || vo.getAttachList().size() <=0 ) {
 			return; //빈값이거나 0보다작으면 수행을 멈춤.
 		}
-		attachMapper.deleteAll(vo.getBno());
+		
 		
 		vo.getAttachList().forEach(attach -> {
 			attach.setBno(vo.getBno());

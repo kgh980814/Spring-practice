@@ -139,7 +139,7 @@
 
 					<div class="form-group">
 						<input name="replyer" id="replyer" type="text"
-							class="form-control" placeholder="writer">
+							class="form-control"  value="<sec:authentication property="principal.username"/>" readonly="readonly">
 					</div>
 				</form>
 			</div>
@@ -155,10 +155,14 @@
 </div>
 <!-- /.modal -->
 <script>
+
+var csrfHeaderName = "${_csrf.headerName}";
+var csrfTokenValue = "${_csrf.token}";
+
 function btn_new(){
 	$("#rno").val('');
 	$("#reply").val('');
-	$("#replyer").val('');
+	$("#replyer").val('<sec:authentication property="principal.username"/>'); 
 	console.log("click");
 	$(".modal-footer").empty();
 	let btn_footer = "";
@@ -291,12 +295,20 @@ function getList() {
 		
 		$(document).on("click","#btn_del",function(){
 			let rno = $('#rno').val();
+			let reply = $('#reply').val();
+			let replyer = $('#replyer').val();
+			
 			 if(confirm("댓글을 삭제하시겠습니까?")){				
 				 //ajax
 				//admin/replies/2
 				$.ajax({
 					type : "DELETE", // HTTP method type(GET, POST,,,,,) 형식이다.
-					url : "/admin/replies/"+rno, // 컨트롤러에서 대기중인 URL 주소이다.				
+					url : "/admin/replies/"+rno, // 컨트롤러에서 대기중인 URL 주소이다.
+					data : JSON.stringify({rno:rno, reply:reply, replyer:replyer}),
+					contentType : "application/json; charset=utf-8",
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					success : function(res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 						//console.log("댓글등록성공"+res);
 						 if(res =='Success'){
@@ -338,6 +350,9 @@ function getList() {
 					url : "/admin/replies/"+rno, // 컨트롤러에서 대기중인 URL 주소이다.
 					contentType : 'application/json',
 					data : JSON.stringify(data), // Json 형식의 데이터이다.
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					success : function(res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 						console.log("댓글등록성공"+res);
 						 if(res =='Success'){
@@ -377,6 +392,9 @@ function getList() {
 					url : "/admin/replies/new", // 컨트롤러에서 대기중인 URL 주소이다.
 					contentType : 'application/json',
 					data : JSON.stringify(data), // Json 형식의 데이터이다.
+					beforeSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					success : function(res) { // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 						console.log("댓글등록성공"+res);
 						 if(res =='Success'){
