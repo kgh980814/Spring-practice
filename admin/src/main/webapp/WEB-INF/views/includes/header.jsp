@@ -7,7 +7,7 @@ location.href="/admin/customLogin";
 </script>
 </sec:authorize>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,7 +73,7 @@ location.href="/admin/customLogin";
     </a>
   </div><!-- .navbar-header -->
   
-  <div class="navbar-container container-fluid">
+ <!--  <div class="navbar-container container-fluid">
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
       <ul class="nav navbar-toolbar navbar-toolbar-left navbar-left">
         <li class="hidden-float hidden-menubar-top">
@@ -109,7 +109,7 @@ location.href="/admin/customLogin";
                   <small class="media-meta">Active now</small>
                 </div>
               </div>
-            </a><!-- .media-group-item -->
+            </a>.media-group-item
 
             <a href="javascript:void(0)" class="media-group-item">
               <div class="media">
@@ -124,7 +124,7 @@ location.href="/admin/customLogin";
                   <small class="media-meta">2 hours ago</small>
                 </div>
               </div>
-            </a><!-- .media-group-item -->
+            </a>.media-group-item
 
             <a href="javascript:void(0)" class="media-group-item">
               <div class="media">
@@ -139,7 +139,7 @@ location.href="/admin/customLogin";
                   <small class="media-meta">idle 5 min ago</small>
                 </div>
               </div>
-            </a><!-- .media-group-item -->
+            </a>.media-group-item
 
             <a href="javascript:void(0)" class="media-group-item">
               <div class="media">
@@ -154,7 +154,7 @@ location.href="/admin/customLogin";
                   <small class="media-meta">idle 5 min ago</small>
                 </div>
               </div>
-            </a><!-- .media-group-item -->
+            </a>.media-group-item
           </div>
         </li>
 
@@ -173,7 +173,7 @@ location.href="/admin/customLogin";
         </li>
       </ul>
     </div>
-  </div><!-- navbar-container -->
+  </div> --><!-- navbar-container -->
 </nav>
 <!--========== END app navbar -->
 
@@ -216,12 +216,7 @@ location.href="/admin/customLogin";
                     <span>Profile</span>
                   </a>
                 </li>
-                <li>
-                  <a class="text-color" href="settings.html">
-                    <span class="m-r-xs"><i class="fa fa-gear"></i></span>
-                    <span>Settings</span>
-                  </a>
-                </li>
+            
                 <li role="separator" class="divider"></li>
                 <li>
                   <a class="text-color" href="javascript:void(0);$('#Logout').submit();">

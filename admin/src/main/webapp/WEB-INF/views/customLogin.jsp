@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<title>ADMIN</title>
@@ -20,17 +20,17 @@
 </head>
 <body class="simple-page">
 	<div id="back-to-home">
-		<a href="index.html" class="btn btn-outline btn-default"><i class="fa fa-home animated zoomIn"></i></a>
+		<a href="/admin/customLogin" class="btn btn-outline btn-default"><i class="fa fa-home animated zoomIn"></i></a>
 	</div>
 	<div class="simple-page-wrap">
 		<div class="simple-page-logo animated swing">
-			<a href="index.html">
+			<a href="/admin/customLogin">
 				<span><i class="fa fa-gg"></i></span>
 				<span>ADMIN</span>
 			</a>
 		</div><!-- logo -->
 		<div class="simple-page-form animated flipInY" id="login-form">
-	<h4 class="form-title m-b-xl text-center">Sign In With Your Infinity Account</h4>
+	<h4 class="form-title m-b-xl text-center">Login</h4>
 	<form method="post" action="login">
 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token}"><!-- post형식으로 값을 넘길때 무조건 csrf값을 넘겨줘야함 -->
 		<div class="form-group">
@@ -44,19 +44,19 @@
 		<div class="form-group m-b-xl">
 			<div class="checkbox checkbox-warning">
 				<input type="checkbox" name="remember-me"id="keep_me_logged_in"/>
-				<label for="keep_me_logged_in">Keep me signed in</label>
+				<label for="keep_me_logged_in">Remember me</label>
 			</div>
 		</div>
 		
-		<input type="submit" class="btn btn-warning" value="SING IN">
+		<input type="submit" class="btn btn-warning" value="LOGIN">
 	</form>
 </div><!-- #login-form -->
 
 <div class="simple-page-footer">
-	<p><a href="password-forget.html">FORGOT YOUR PASSWORD ?</a></p>
+	<p><a href="password-forget.html">비밀번호를 잊으셨나요?</a></p>
 	<p>
-		<small>Don't have an account ?</small>
-		<a href="signup.html">CREATE AN ACCOUNT</a>
+		<small>계정이 없으신가요?</small>
+		<a href="signup.html">회원가입</a>
 	</p>
 </div><!-- .simple-page-footer -->
 

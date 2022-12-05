@@ -14,9 +14,9 @@
   </div>
   <!-- /#app-footer -->
 </main>
-<!--========== END app main -->
+<!--  ========== END app main -->
 
-	<!-- APP CUSTOMIZER -->
+	<!--APP CUSTOMIZER
 	<div id="app-customizer" class="app-customizer">
 		<a href="javascript:void(0)" 
 			class="app-customizer-toggle theme-color" 
@@ -27,11 +27,11 @@
 			<i class="fa fa-gear"></i>
 		</a>
 		<div class="customizer-tabs">
-			<!-- tabs list -->
+			tabs list
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#menubar-customizer" aria-controls="menubar-customizer" role="tab" data-toggle="tab">Menubar</a></li>
 				<li role="presentation"><a href="#navbar-customizer" aria-controls="navbar-customizer" role="tab" data-toggle="tab">Navbar</a></li>
-			</ul><!-- .nav-tabs -->
+			</ul>.nav-tabs
 
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane in active fade" id="menubar-customizer">
@@ -53,18 +53,18 @@
 						<input type="radio" id="menubar-dark-theme" name="menubar-theme" data-toggle="menubar-theme" data-theme="dark">
 						<label for="menubar-dark-theme">Dark</label>
 					</div>
-				</div><!-- .tab-pane -->
+				</div>.tab-pane
 				<div role="tabpanel" class="tab-pane fade" id="navbar-customizer">
-					<!-- This Section is populated Automatically By javascript -->
-				</div><!-- .tab-pane -->
+					This Section is populated Automatically By javascript
+				</div>.tab-pane
 			</div>
-		</div><!-- .customizer-taps -->
+		</div>.customizer-taps
 		<hr class="m-0">
 		<div class="customizer-reset">
 			<button id="customizer-reset-btn" class="btn btn-block btn-outline btn-primary">Reset</button>
 			<a href="https://themeforest.net/item/infinity-responsive-web-app-kit/16230780" class="m-t-sm btn btn-block btn-danger">Buy Now</a>
 		</div>
-	</div><!-- #app-customizer -->
+	</div>#app-customizer --> 
 	
 	<!-- SIDE PANEL -->
 	<div id="side-panel" class="side-panel">
