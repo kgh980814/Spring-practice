@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.traveler.mapper.BudgetMapper">
+	<resultMap id="BudgetVO" type="com.traveler.domain.BudgetVO">
+		<id column="budget_no" property="budget_no" />
+		<id column="planNo" property="planNo" />
+		<id column="userId" property="userId" />
+		<id column="title" property="title" />
+		<result column="cat" property="cat" />
+		<result column="income" property="income" />
+		<result column="expend" property="expend" />
+		<result column="total" property="total" />
+		<result column="planDate" property="planDate" />
+		<result column="planTotalDate" property="planTotalDate" />
+		<result column="descript" property="descript" />
+		<result column="is_public" property="is_public" />
+		<result column="reg_date" property="reg_date" />
+		<collection property="plannerVO"
+			ofType="com.traveler.domain.PlannerVO">
+			<id column="planNo" property="planNo" />
+			<id column="userId" property="userId" />
+			<result column="planTitle" property="planTitle" />
+			<result column="info" property="info" />
+		</collection>
+	</resultMap>
+	<insert id="insertBudget">
+		insert into budget (budget_no, planno,userid,
+		title,cat,income,expend,total,planDate,planTotalDate,descript,is_public)
+		values
+		(budget_no.nextval,#{planNo}, #{userId}, #{title}, #{cat},
+		#{income},
+		#{expend}, #{total}, #{planDate},#{planTotalDate},
+		#{descript},#{is_public})
+	</insert>
+
+	<select id="readBudget" resultMap="BudgetVO">
+		select * from budget
+		where
+		planno = #{planNo} and userid = #{userId}
+	</select>
+
+	<update id="insertAndUpdateBudget">
+		merge into budget
+		using dual
+		on (planNo=#{planNo} and
+		userId=#{userId} and title=#{title} and planDate=#{planDate})
+		when
+		matched then
+		update set
+		income = #{income}, expend=#{expend},
+		total=#{total}, descript = #{descript}, cat =#{cat}, is_public =
+		#{is_public}, planTotalDate = #{planTotalDate}
+		when not matched then
+		insert
+		(budget_no,planNo,userId,title,cat,income,expend,total,descript,planDate,planTotalDate,is_public)
+		VALUES (budget_no.nextval, #{planNo},#{userId},#{title}, #{cat},
+		#{income}, #{expend},#{total},
+		#{descript},#{planDate},#{planTotalDate}, #{is_public})
+	</update>
+
+	<select id="readAllMemberPlanNoIsPublicYes" resultMap="BudgetVO">
+		select
+		planno, reg_date from budget
+		where is_public = 'Y'
+		group by planno,
+		reg_date
+		order by planno asc
+	</select>
+
+	<select id="readIsPublicBudget" resultType="Map">
+		select min(x) as
+		min_exp ,max(x) as max_exp, avg(x) as avg_exp, min(y) as min_inc,
+		max(y) as max_inc, avg(y) as avg_inc, min(z) as min_total, max(z) as
+		max_total, avg(z) as avg_total
+		from (
+		select planno, total as z,
+		sum(expend) as x, sum(income) as y
+		from budget
+		where is_public='Y'
+		group
+		by planno, total
+		order by planno, total asc
+		)
+	</select>
+
+	<select id="readIsPublicCat" resultType="Map">
+		select cat, count(cat)
+		as count_cat
+		from budget
+		where is_public ='Y'
+		group by cat
+		order by cat
+	</select>
+
+	<select id="readIsPublicBudgetFromTotalDate" resultType="Map">
+		select
+		min(x) as
+		min_exp ,max(x) as max_exp, avg(x) as avg_exp, min(y) as
+		min_inc,
+		max(y) as max_inc, avg(y) as avg_inc, min(z) as min_total,
+		max(z) as
+		max_total, avg(z) as avg_total
+		from (
+		select planno, total as
+		z,
+		sum(expend) as x, sum(income) as y
+		from budget
+		where is_public='Y' and
+		planTotalDate = #{planTotalDate}
+		group
+		by planno, total
+		order by planno,
+		total asc
+		)
+	</select>
+
+	<select id="readIsPublicCatFromTotalDate" resultType="Map">
+		select cat,
+		count(cat)
+		as count_cat
+		from budget
+		where is_public ='Y' and
+		planTotalDate=#{planTotalDate}
+		group by cat
+		order by cat
+	</select>
+
+	<select id="readPlanNoEqualTotalDate" parameterType="HashMap" resultMap="BudgetVO">
+				SELECT *
+		FROM (
+		SELECT ROWNUM RN, A.*
+		FROM (
+		SELECT planno, reg_date
+		FROM BUDGET
+		WHERE IS_PUBLIC='Y' AND PLANTOTALDATE=#{planTotalDate}
+		GROUP BY PLANNO, reg_date
+		ORDER BY planno
+		) A
+		)
+		WHERE RN BETWEEN ((#{pageNum} - 1) * 5)+1 AND #{pageNum} * 5
+	</select>
+	
+	<select id="countBudgetFromTotalDate" resultType="Integer">
+		select count(x)
+		from (
+		select planno as x
+		from budget
+		where is_public='Y' and planTotalDate = #{planTotalDate}
+		group by planno
+		)
+	</select>
+	
+	<select id="readPlanNoRecommendMaxTotal" resultMap="BudgetVO">
+		select
+		distinct(planno) as planNo, reg_date, total
+		from budget
+		where total = (
+		select max(total)
+		from budget
+		where is_public='Y' and
+		planTotalDate=#{planTotalDate}
+		)and rownum = 1
+		order by reg_date, planno
+		desc
+	</select>
+
+	<select id="readPlanNoRecommendMinTotal" resultMap="BudgetVO">
+		select
+		distinct(planno) as planNo, reg_date, total
+		from budget
+		where total = (
+		select min(total)
+		from budget
+		where is_public='Y' and
+		planTotalDate=#{planTotalDate}
+		) and rownum = 1
+		order by reg_date,
+		planno desc
+	</select>
+
+	<select id="readBudgetFromPlanNo" resultMap="BudgetVO">
+		select * from budget
+		where planNo = #{planNo}
+	</select>
+
+	<select id="budgetIndexPaging" resultMap="BudgetVO">
+		SELECT *
+		FROM (
+		SELECT ROWNUM RN, A.*
+		FROM (
+		SELECT planno, reg_date
+		FROM BUDGET
+		WHERE BUDGET.IS_PUBLIC='Y'
+		GROUP BY PLANNO, reg_date
+		ORDER BY planno
+		) A
+		)
+		WHERE RN BETWEEN ((#{pageNum} - 1) * 5)+1 AND #{pageNum} * 5
+	</select>
+
+	<select id="countBudgetIsPublic" resultType="Integer">
+		select count(x)
+		from (
+		select planno as x
+		from budget
+		where is_public='Y'
+		group by planno
+		)
+	</select>
+</mapper>

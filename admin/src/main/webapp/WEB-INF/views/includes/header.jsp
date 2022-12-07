@@ -73,7 +73,7 @@ location.href="/admin/customLogin";
     </a>
   </div><!-- .navbar-header -->
   
- <!--  <div class="navbar-container container-fluid">
+ <div class="navbar-container container-fluid">
     <div class="collapse navbar-collapse" id="app-navbar-collapse">
       <ul class="nav navbar-toolbar navbar-toolbar-left navbar-left">
         <li class="hidden-float hidden-menubar-top">
@@ -173,7 +173,7 @@ location.href="/admin/customLogin";
         </li>
       </ul>
     </div>
-  </div> --><!-- navbar-container -->
+  </div> 
 </nav>
 <!--========== END app navbar -->
 

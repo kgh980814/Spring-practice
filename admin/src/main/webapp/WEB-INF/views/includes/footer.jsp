@@ -16,7 +16,7 @@
 </main>
 <!--  ========== END app main -->
 
-	<!--APP CUSTOMIZER
+	<!--APP CUSTOMIZER-->
 	<div id="app-customizer" class="app-customizer">
 		<a href="javascript:void(0)" 
 			class="app-customizer-toggle theme-color" 
@@ -64,7 +64,7 @@
 			<button id="customizer-reset-btn" class="btn btn-block btn-outline btn-primary">Reset</button>
 			<a href="https://themeforest.net/item/infinity-responsive-web-app-kit/16230780" class="m-t-sm btn btn-block btn-danger">Buy Now</a>
 		</div>
-	</div>#app-customizer --> 
+	</div><!--#app-customizer --> 
 	
 	<!-- SIDE PANEL -->
 	<div id="side-panel" class="side-panel">
