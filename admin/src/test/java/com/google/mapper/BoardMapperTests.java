@@ -20,12 +20,12 @@ public class BoardMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private BoardMapper mapper;
 	
-	//@Test
+	@Test
 	public void testGetList() {
 		mapper.getList().forEach(board->log.info(board));
 	}
 	
-	@Test
+	//@Test
 	public void testGetListWithPaging() {
 		Criteria cri = new Criteria(1, 20);
 		cri.setType("TCW");
