@@ -10,4 +10,8 @@ public interface BoardService {
 	public boolean remove(Long bno);
 
 	public List<BoardVO> getList();
+	
+	public void register(BoardVO board);
+	
+	public BoardVO get(Long bno);
 }

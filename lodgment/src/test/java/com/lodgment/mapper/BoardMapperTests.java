@@ -21,7 +21,7 @@ public class BoardMapperTests {
 	@Setter(onMethod_ = {@Autowired})
 	private BoardMapper mapper;
 	
-	@Test
+	//@Test
 	public void testGetList() {
 		mapper.getList().forEach(board->log.info(board));
 	}
@@ -58,5 +58,7 @@ public class BoardMapperTests {
 	public void testDelete( ) {
 		log.info("DELETE COUNT : " + mapper.delete(3L));
 	}
+	
+	
 }
 	

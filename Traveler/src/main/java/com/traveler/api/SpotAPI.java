@@ -77,6 +77,7 @@ public class SpotAPI {
 
 			// root tag 
 			doc.getDocumentElement().normalize();
+			System.out.println(url);
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
 			// �Ľ��� tag
