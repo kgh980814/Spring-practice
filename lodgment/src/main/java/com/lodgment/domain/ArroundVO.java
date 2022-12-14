@@ -1,5 +1,8 @@
 package com.lodgment.domain;
 
+import lombok.Data;
+
+@Data
 public class ArroundVO {
 	private String pageNo;
 	private String  addr1;

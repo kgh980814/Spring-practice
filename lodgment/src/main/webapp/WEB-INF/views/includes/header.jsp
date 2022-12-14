@@ -13,7 +13,6 @@
     <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="/resources/img/goodchoice.png">
     <!-- Place favicon.ico in the root directory -->
-
     <!-- CSS here -->
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/owl.carousel.min.css">
@@ -29,6 +28,8 @@
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
 	
     <link rel="stylesheet" href="/resources/css/style.css">
+    
+   
     <!-- <link rel="stylesheet" href="/resources/css/responsive.css"> -->
 </head>
 
@@ -46,7 +47,7 @@
                         <div class="row align-items-center">
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
-                                    <a href="Index">
+                                    <a href="/">
                                         <img src="/resources/img/logo.png" alt="">
                                     </a>
                                 </div>
@@ -57,7 +58,7 @@
                                         <ul id="navigation">
                                             <li><a class="active" href="/">home</a></li>
                                    
-                                            <li><a class="" href="/arround">내주변</a></li>
+                                            <li><a class="" href="/arround/arroundlist">내주변</a></li>
                                             <li><a href="List">게시판 </a></li>
                                         </ul>
                                     </nav>
