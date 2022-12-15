@@ -26,9 +26,12 @@
     <link rel="stylesheet" href="/resources/css/slick.css">
     <link rel="stylesheet" href="/resources/css/slicknav.css">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css">
-	
+	<!-- javascript date range picker를 위해 필요한 라이브러리 -->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="/resources/css/style.css">
-    
+    <link rel="stylesheet" href="/resources/css/datepickerstyle.css">
    
     <!-- <link rel="stylesheet" href="/resources/css/responsive.css"> -->
 </head>
