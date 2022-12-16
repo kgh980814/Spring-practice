@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../includes/header.jsp" %>
 
+
     <!-- bradcam_area  -->
     <div class="bradcam_area bradcam_bg_1">
         <div class="container">
@@ -17,7 +18,7 @@
     <!--/ bradcam_area  -->
 
     <div class="popular_places_area">
-    
+    <form id="form-search-accos">
         <div class="container" style="padding-bottom: 150px">
                        	<div>
                              <div class="fw-bold mt-3 mb-1 fs-5"><h2>내주변</h2>
@@ -160,23 +161,149 @@
 							<input type="radio" class="btn-check" id="btnradio4" name="sort" value="highprice">
 						  	<label class="btn btn-secondary" for="btnradio4">높은 가격 순</label>
 						</div>
-						<button type="button" class="btn btn-light my-auto" id="btn-open-modal-map"><i class="bi bi-map"></i></button>
+						<button type="button" class="btn btn-light my-auto" id="btn-open-modal-map">지도</button>
 						</div>
 						<div id="accos-wrapper" class="row px-3 mx-auto">
 						<!-- 숙소 검색결과가 script를 통해 출력됨-->
 						</div>
-					</div>
-						
-                
+					</div>           
             </div>
         </div>
-    </div>
+        <div class="fixed-bottom d-flex justify-content-end">
+		<i class="bi bi-arrow-up-circle fs-2 p-5" onclick="javscript:(function(){window.scrollTo(0,0);})();" style="cursor: pointer;"></i>
+	</div>
+      </form>
+ </div>
+<%@ include file="../includes/footer.jsp" %>
+<!-- 지도 조회 모달 -->
+<div id="modal-map" class="modal" tabindex="-1">
+	<div class="modal-dialog modal-dialog-centered modal-xl">
+		<div class="modal-content">
+			<div class="modal-header d-flex justify-content-between">
+				<span class="small me-auto"><strong id="modal-current-city"></strong></span>
+				<span class="small ms-auto">내 위치 : <strong id="modal-current-location-address"></strong></span>
+				<button type="button" class="btn-close ms-3" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body d-flex justify-content-center">
+				<!-- 지도 출력 :  -->
+				<div id="map" style="width:1200px;height:600px;"></div>
+			</div>
+		</div>
+	</div>
+</div>      
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=34551f66b723262141fe6f5b04652c38"></script>
+<script>
+   $(function(){
+	   /*
+	    * 현재 위치 좌표 갱신하고, 숙소 검색 결과 갱신하기 : 최초 화면 출력시에 실행하고, 사용자가 내 위치 버튼 클릭 시에도 실행한다.
+	    */
+	   	// 현재 위치 좌표를 저장하는 변수
+	   	let currentLat = '';
+	   	let currentLong = '';
+	   	refreshLocation();
+	   	
+	   	// geolocation.getCurrentPosition은 비동기 통신으로 이루어지므로 반드시 이 통신이 완료되고 숙소 검색 요청을 보내야 한다.
+	   	// 아래 함수를 실행하면 현재 위치 좌표를 새로 조회하고, 전역변수 currentLat, currentLong와 hidden 태그에 값이 저장된다.
+	   	// 현재 위치 좌표를 새로 조회하지 못하면 서울 중심 좌표를 대신 저장한다.
+	   	// 위 수행을 완료하면 숙소 검색 결과를 새로 요청해 화면에 출력한다.
+	   	function refreshLocation() {
+	   		// navigator.geolocation에서 지원하는 메소드를 사용해 사용자의 현재 위치 좌표값을 획득한다.
+	   		// 받아온 좌표값은 hidden태그에 저장해서 숙소 검색 시 거리계산 조건에 사용할 수 있게 한다.
+	   		if (navigator.geolocation) {
+	   			navigator.geolocation.getCurrentPosition(function(position) {
+	   				// 성공 시 콜백함수
+	   		    	currentLat = position.coords.latitude;
+	   		    	currentLong = position.coords.longitude;
+	   				$(":hidden[name=currentLat]").val(currentLat);
+	   				$(":hidden[name=currentLong]").val(currentLong);
+	   				// 화면, 모달창에 현재 위치 주소를 출력한다.
+	   				getLocationAddress();
+	   				searchAccos();
+	   	    	}, function(position) {
+	   				// 실패 시 콜백함수
+	   				// 현재 위치를 받을 수 없으면 서울 중심 좌표를 저장
+	   				  	currentLat = 37.564214;
+	   				  	currentLong = 127.0016985;
+	   				$(":hidden[name=currentLat]").val(currentLat);
+	   				$(":hidden[name=currentLong]").val(currentLong);
+	   				// 화면, 모달창에 (정보없음)을 출력한다. (위치는 서울 중심으로 되어있지만 정보가 없음을 알려주기)
+	   				    	$("#modal-current-location-address").text('(정보 없음)');
+	   				 	  	$("#home-current-location-address").text('(정보 없음)');
+	   				searchAccos();//searchAccos메소드 호출
+	   			});
+	   		}
+	   	}
+	   	
+	 // 현재 위치 좌표값으로 주소 정보를 조회해 모달 창 화면에 출력하는 함수
+		function getLocationAddress() {
+	        $.getJSON('https://maps.googleapis.com/maps/api/geocode/json', 
+	      		  {sensor:false, 
+	      	       language:"ko",
+	      	       latlng: currentLat+","+currentLong, 
+	      	       key: "AIzaSyCzEGAtOkj5WXGtxpLeeubv4h_UfT7KN1w"})
+	      .done(function(data) {
+	      	let location = data.results[0];
+	      	let address = location.formatted_address.split(' ');
+	      	$("#modal-current-location-address").text(address[2]+' '+address[3]);
+	      	$("#home-current-location-address").text(address[2]+' '+address[3]);
+	      })
+		}
+	 
+		/*
+		 * 모달 창에 카카오 openAPI로 지도 가져오기
+		 */
+			// 모달 창에 지도 정의하기
+			let container = document.getElementById('map');
+			// mapcenter 값 설정
+			let options = { //지도를 생성할 때 필요한 기본 옵션
+					center: new kakao.maps.LatLng("37.5666805", "126.9784147"), //지도의 중심좌표
+					level: 7 //지도의 레벨(확대, 축소 정도)
+			};
+			// 지도 생성
+			let map = new kakao.maps.Map(container, options);
+			// 현재 선택한 지역에 따른 지도의 중심좌표와 확대 레벨 재설정
+			changeMapCenter(map);
+			// 내 위치 마커 생성하기
+			// 내 위치 마커 이미지 만들기
+			let myLocaMarkerImage =  new kakao.maps.MarkerImage('/resources/img/markericons/house-door-fill.svg', new kakao.maps.Size(45,45));
+			let myLocationMarker = new kakao.maps.Marker({
+			    position: new kakao.maps.LatLng(currentLat, currentLong),
+			    image: myLocaMarkerImage
+			});
+			// 내 위치 마커 지도에 표시하기
+			myLocationMarker.setMap(map);
+	   
+// 지도 버튼에 모달 이벤트 연결하기
+	let modalMap = new bootstrap.Modal($("#modal-map"));
+	$("#btn-open-modal-map").click(function () {
+		modalMap.show();
+		// 카카오맵이 보이지 않다가 보이게 되므로, 카카오맵 api 메소드 중 레이아웃과 중심을 재설정 해주는 메소드를 실행해야 지도 화면과 중심이 깨지지 않는다.
+		map.relayout(); 
+		changeMapCenter(map);
+		myLocationMarker.setPosition(new kakao.maps.LatLng(currentLat, currentLong));
+		// 선택한 지역범위 출력
+		let cityValue = $("[name=city] :selected").text();
+		$("#modal-current-city").text(cityValue);
+	});
 
-        <!-- newletter_area_start  -->
-
-        <!-- newletter_area_end  -->
-   <script>
-   $(function () {
+	
+	
+	/*
+	 * 선택한 지역에 따라 지도의 중심좌표 변경하기
+	 */
+		function changeMapCenter(map) {
+		// 지도의 중심 좌표는 지역 선택에 따라 달라진다.
+		let cityLat = $("select[name=city] :selected").attr("data-city-lat");
+		let cityLong = $("select[name=city] :selected").attr("data-city-long");
+		map.setCenter(new kakao.maps.LatLng(cityLat, cityLong));
+		// 전체 조회 / 지역 조회에 따라 확대 레벨이 달라진다. '서울전체' 항목은 value 값이 ""이다.
+		if ($("select[name=city] :selected").val() == "") {
+			map.setLevel(8);
+		} else {
+			map.setLevel(6);
+		}
+	}
+	
 	   /*
 		input태그에서 daterangepicker 통해 숙박일정 선택하기
 		TO DO : 가능하면 확인 버튼 위치 등 수정 또는 다른 라이브러리 사용?
@@ -189,7 +316,7 @@
 		let duration = 1;
 		// daterangepicker 생성 설정
 	    $('#datepicker').daterangepicker({
-	    	// 직접 커스텀한 문자열을 input태그의 value에 넣기 위해 autoUpdate 해제
+	    	// 직접 커스텀한 문자열을 input태그의 value에 넣기 위해 autoUpdateInput 해제 
 	    	"autoUpdateInput": false,
 	    	// 최대 7박까지 예약 가능
 			"maxSpan": {
@@ -269,7 +396,232 @@
 	});
 	// 처음에는 1만원 이상으로 표시한다. (hidden태그 기본 최소/최대값도 1~30으로 저장되어있음)
 	$("#amount").text($("#slider-range").slider("values", 0) + "만원 이상");
-   });
+	
+	/*
+	 * ajax로 검색 조건에 따른 숙소정보 조회하기
+	 */
+	 	// 현재 지도에 표시된 마커를 관리하기 위한 배열을 정의한다.
+	 	let accoMarkers = [];
+	 	// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수.
+	 	// * 인자값이 null이면 마커를 삭제하고, 지도 객체이면 그 지도에 마커를 표시한다.
+	 	function setMarker(map) {
+	 		for (let i = 0; i < accoMarkers.length; i++) {
+	 			accoMarkers[i].setMap(map);
+	 		}
+	 	}
+	 	
+	 	// 마커에서 사용할 이미지 객체를 만든다.
+	 	let accoMarkerImage =  new kakao.maps.MarkerImage('/resources/img/markericons/geo-alt-fill.svg', new kakao.maps.Size(45,45));
+	 	// 스크롤링 시 컨텐츠를 꺼낼 배열을 정의한다.
+	 	let accoContents = [];
+	 	function searchAccos() {
+			let queryString = $("#form-search-accos").serialize();
+			// 기존에 화면에 출력된 숙소정보 컨텐츠를 모두 지우고, 배열을 비운다.
+			let $div = $("#accos-wrapper").empty();
+			accoContents = [];
+			// 기존에 지도에 표시된 마커를 모두 삭제하고, 배열을 비운다.
+			setMarker(null);
+			accoMarkers = [];
+			
+			// ajax로 검색조건에 따른 숙소정보를 요청해 응답데이터로 받는다.
+			$.getJSON("/accommodations", queryString).done(function(accos) {
+				if (accos.length === 0) {
+					let content = `
+						<p class="my-5 text-center">조회된 결과가 없습니다.</p>
+					`;
+					$div.append(content);
+				} else {
+					let count = 0;
+					$.each(accos, function(index, acco) {
+						// 숙소 정보 html컨텐츠 생성
+						let content = '';
+						content += '<div id="card-acco-' + acco.id +'" class="card text-bg-light p-0 rounded-0">';
+						content += '	<img src="/resources/img/acco/thumbnail/' + acco.thumbnailImageName +'" class="list-thumbnail card-img img-fluid rounded-0" alt="accommodation thumbnail">';
+						content += '	<a href="acco/detail?id=' + acco.id + '">';
+						content += '		<div class="list-overlay card-img-overlay p-3 rounded-0 text-light d-flex justify-content-between">';
+						content += '			<div class="my-auto">';
+						content += '				<h5 class="fw-semibold">' + acco.name + '</h5>';
+						content += '				<p class="text-warning">';
+						content += '					<span class="badge bg-warning">' + acco.reviewRate.toFixed(1) + '</span><strong class="ms-2">' + acco.reviewRateKeyword +' (' + acco.reviewCount  +')</strong>';
+						content += '				</p>';
+						content += '				<small>' + acco.district + '</small>';
+						content += '			</div>';
+						content += '			<p class="text-end fs-4 fw-semibold mt-auto">' + acco.minPrice.toLocaleString() + '<span class="fs-5"> 원 ~</span></p>';
+						content += '		</div>';
+						content += '	</a>';
+						content += '</div>';
+						count ++;
+						
+						// 숙소 정보 html컨텐츠를 tbody에 추가
+						// 7번째 컨텐츠 부터는 화면에 바로 출력하지 않고 스크롤링 시 사용하는 배열 accoContents에 담는다.
+						if (count < 7) {
+							$div.append(content);
+						} else {
+							accoContents.push(content);
+						}
+						
+						// 지도에 표시할 마커 객체 생성
+						let markerPosition = new kakao.maps.LatLng(acco.latitude, acco.longitude);
+						let marker = new kakao.maps.Marker({
+						    position: markerPosition,
+						    image: accoMarkerImage
+						});
+						
+						// 마커에 click 이벤트를 등록
+		 				kakao.maps.event.addListener(marker, 'click', function() {
+		 					// 상세조회 페이지로 이동
+		 					location.href= "acco/detail?id=" + acco.id;
+		 				});
+						
+						// 마커에 mouseover, mouseout 이벤트를 등록
+						// * mouseover 시 보여줄 커스텀오버레이를 생성 (숙소 정보 요약)
+						let overlaycontent = '';
+						overlaycontent += `<div class="position-relative">
+												<div class="position-absolute" style="top: -130px; left: -95px;">
+													<button type="button" class="btn btn-dark position-relative" style="background-color: rgba( 0, 0, 0, 0.5 );">
+														<div>`;
+						overlaycontent += acco.name + '<br/>';
+						overlaycontent += '<small>평점 : </small><span class="badge bg-warning">' + acco.reviewRate.toFixed(1) + '</span><br/>';
+						overlaycontent += '<small>내 위치까지 거리 : <strong>' + acco.currentDistance + 'km</strong></small>';
+						overlaycontent += `				</div>
+													<svg width="1em" height="1em" viewBox="0 0 16 16" class="position-absolute top-100 start-50 translate-middle mt-1 opacity-50" fill="#212529" xmlns="http://www.w3.org/2000/svg"><path d="M7.247 11.14L2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>
+												</button>
+											</div>
+										</div>`;
+						let overlay = new kakao.maps.CustomOverlay({
+							content: overlaycontent,
+							position: markerPosition
+						});
+						kakao.maps.event.addListener(marker, 'mouseover', function() {
+							overlay.setMap(map);
+						});
+						kakao.maps.event.addListener(marker, 'mouseout', function() {
+							overlay.setMap(null);
+						});
+						
+						// 배열에 마커 객체를 저장
+						accoMarkers.push(marker);
+					});
+					// 배열에 새로 담긴 마커 객체를 모두 지도에 표시한다.
+					setMarker(map);
+				}
+				
+			});
+		}
+	 	
+	/**
+	 * 화면을 아래로 스크롤하면 검색결과를 추가로 더 보여주는 스크롤링 기능 
+	 */
+	 // 스크롤 바닥 감지 했을 때에 대한 이벤트핸들러 등록
+	 window.onscroll = function(e) {
+	 	// 배열에 있는 정보를 다 꺼내면, 콘텐츠 추가를 수행하지 않고, footer를 보여준다.
+	 	// 배열에 있는 정보가 아직 남아있으면 footer를 d-none상태로 유지한다.
+	 	$("#footer").addClass("d-none");
+	 	if (accoContents.length == 0) {
+	 		$("#footer").removeClass("d-none");
+	 		return false;
+	 	}
+	 	
+	 	// 숙소 콘텐츠 추가하기
+		// window의 높이와 현재 스크롤 위치 값을 더했을 때 문서의 높이보다 크거나 같으면 리뷰정보 배열에서 가장 앞에 있는 값을 꺼내 콘텐츠를 추가시킨다.
+		// 화면에 제공한 콘텐츠는 배열에서 삭제된다.
+	 	if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+	 		console.log(window.scrollY);
+	 		let addContent = accoContents.shift();
+	 		$("#accos-wrapper").append(addContent);
+	 	}
+	 };
+		
+	/*
+	 * 엘리먼트에 대한 사용자 상호작용 이벤트 등록
+	 */
+		// 날짜를 변경했을 때 숙소 재검색 후 화면 갱신 : daterangepicker 생성 코드에서 설정함
+		// 상세조건 적용 버튼을 눌렀을 때 숙소 재검색 후 화면 갱신
+		$("#btn-apply").click(function() {
+			searchAccos();
+		});
+	 	// 상세조건 중 공용시설/객실시설/태그 란에서 전체선택/해제를 눌렀을 때 체크박스 토글
+	 	$(".toggle").change(function() {
+	 		let toggleId = $(this).attr("id");
+	 		let isToggleChecked = $(this).prop("checked");
+	 		
+	 		let $target = '';
+	 		if (toggleId === "toggle-cofa") {
+	 			$target = $("input[name=commonFacilities]");
+	 		} else if (toggleId === "toggle-rofa") {
+	 			$target = $("input[name=roomFacilities]");
+	 		} else if (toggleId === "toggle-tag") {
+	 			$target = $("input[name=tags]");
+	 		}
+	 		$target.prop("checked", function() {
+	 			return isToggleChecked;
+	 		});
+	 	});
+	 	$("input[name=commonFacilities]").change(function(){
+	 		let checkedItemsLength = $("input[name=commonFacilities]:checked").length;
+	 		if (checkedItemsLength == 0) {
+		 		$("#toggle-cofa").prop("checked", false);
+	 		} else {
+		 		$("#toggle-cofa").prop("checked", true);
+	 		}
+	 	});
+	 	$("input[name=roomFacilities]").change(function(){
+	 		let checkedItemsLength = $("input[name=roomFacilities]:checked").length;
+	 		if (checkedItemsLength == 0) {
+		 		$("#toggle-rofa").prop("checked", false);
+	 		} else {
+		 		$("#toggle-rofa").prop("checked", true);
+	 		}
+	 	});
+	 	$("input[name=tags]").change(function(){
+	 		let checkedItemsLength = $("input[name=tags]:checked").length;
+	 		if (checkedItemsLength == 0) {
+		 		$("#toggle-tag").prop("checked", false);
+	 		} else {
+		 		$("#toggle-tag").prop("checked", true);
+	 		}
+	 	});
+		// 정렬 버튼을 눌렀을 때 숙소 재검색 후 화면 갱신
+		// 		TO DO : 적용 버튼 누르지 않은 내용은 반영 안 시킬 수 있나?
+		$("input[name=sort]").click(function() {
+			searchAccos();
+		});
+		// 지역을 변경했을 때 숙소 재검색 후 화면 갱신, 지도 center 변경
+		$("select[name=city]").change(function() {
+			searchAccos();
+			changeMapCenter(map);
+		});
+		// 초기화 버튼을 눌렀을 때 상세조건을 모두 초기화 후 검색(적용)
+		$("#btn-reset").click(function() {
+			// 인원
+			$("input[name=capacity]").val("1");
+			// 가격
+			$("#slider-range").slider("option", "values", [1,30]);
+			$(":hidden[name=minPrice]").val(10000);
+			$(":hidden[name=maxPrice]").val(800000);
+			$("#amount").text("1만원 이상");
+			// 공용시설
+			$(":checkbox[name=commonFacilities]").prop("checked", false);
+			// 객실시설
+			$(":checkbox[name=roomFacilities]").prop("checked", false);
+			// 기타
+			$(":checkbox[name=tags]").prop("checked", false);
+			// 토글체크박스
+			$(".toggle").prop("checked", false);
+			searchAccos();
+		});
+		// 상세조건 공용시설, 객실시설, 태그 옵션 열고 닫기, 아이콘 토글
+		$(".label-option").click(function() {
+			$(this).next().toggleClass("d-none");
+			$(this).find(".bi").toggleClass("d-none");
+		});
+		// 나침반 아이콘을 눌렀을 때 내 위치 정보를 다시 조회하고, 검색결과도 갱신
+		$("#icon-refresh-location").click(function(){
+			refreshLocation();
+		});
+});
+   
+   
+   
    </script>
   
-<%@ include file="../includes/footer.jsp" %>
