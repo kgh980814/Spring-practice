@@ -17,14 +17,14 @@ import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/arround/*")
+@RequestMapping("/*")
 @AllArgsConstructor
 public class ArroundController {
 	
 
 
 	
-	@GetMapping("/arroundlist")
+	@GetMapping("/near")
 	public String getSpotList(ArroundVO vo,@RequestParam(value="sigunguCode", defaultValue="") String sigunguCode, @RequestParam(value="contentTypeId",defaultValue="") String contentTypeId,Model model) throws Exception {
 		
 		
@@ -33,7 +33,7 @@ public class ArroundController {
 		model.addAttribute("contentTypeId",contentTypeId);
 		log.info(""+vo);
 		
-		return "arround/arroundlist";
+		return "accommodation/home";
 		
 	}
 }
