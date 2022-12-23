@@ -31,7 +31,7 @@
 		background-color: rgba(255, 255, 255, 0.15);
 	}
 </style>
-<title>서울어때</title>
+<title>여기어때</title>
 </head>
 <body>
 <!-- 
@@ -69,7 +69,7 @@
 			<div class="row p-3">
 				<div class="col d-flex justify-content-start align-items-center my-auto px-0">
 					<select class="form-select w-50 p-1" name="city">
-						<option value="" data-city-lat="37.5666805" data-city-long=" 126.9784147" selected>서울 전체</option>
+						<option value="" data-city-lat="35.8350848" data-city-long=" 129.2894208" selected>전체</option>
 						<!-- 모든 지역정보를 받아와 반복문으로 출력 -->
 						<c:forEach var="city" items="${cities }">
 							<option value="${city.id }" data-city-lat="${city.latitude }" data-city-long="${city.longitude }">${city.name }</option>
@@ -313,7 +313,7 @@ $(function () {
 	let container = document.getElementById('map');
 	// mapcenter 값 설정
 	let options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(currentLat, currentLong), //지도의 중심좌표
+			center: new kakao.maps.LatLng("37.5666805", "126.9784147"), //지도의 중심좌표
 			level: 7 //지도의 레벨(확대, 축소 정도)
 	};
 	// 지도 생성
