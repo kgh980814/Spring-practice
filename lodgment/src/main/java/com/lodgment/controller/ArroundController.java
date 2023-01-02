@@ -9,31 +9,54 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lodgment.api.LodgmentAPI;
-import com.lodgment.domain.ArroundVO;
-
+import com.lodgment.service.AccommodationService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 
 @Controller
 @Log4j
-@RequestMapping("/*")
+@RequestMapping("/near")
 @AllArgsConstructor
 public class ArroundController {
-	
-
-
-	
-	@GetMapping("/near")
-	public String getSpotList(ArroundVO vo,@RequestParam(value="sigunguCode", defaultValue="") String sigunguCode, @RequestParam(value="contentTypeId",defaultValue="") String contentTypeId,Model model) throws Exception {
+	@Autowired
+	private AccommodationService accommodationService;
+	// 숙소 검색 페이지 뷰 반환
+	@GetMapping(path = "")
+	public String home(@RequestParam(defaultValue = "") String type, @RequestParam(defaultValue = "") String keyword, Model model) {
 		
+		// 검색 데이터는 restController에서 제공하기 때문에 이 요청핸들러에서 제공하지 않는다.
+		// 그 외의 화면에서 필요한 정보를 이 요청핸들러에서 모두 전달한다. 
 		
-	
-		model.addAttribute("sigunguCode",sigunguCode);
-		model.addAttribute("contentTypeId",contentTypeId);
-		log.info(""+vo);
+		// type, keyword를 동시에 전달받은 경우 오류화면으로 이동한다.
+//		if (!type.isBlank() && !keyword.isBlank()) {
+//			// TODO : 오류화면 구현해서 연결시키기 (현재는 임시로 홈화면으로 연결함)
+//			return "home";
+//		}
+		
+		// TODO URL에 잘못된 type명을 적은 경우?
+		
+		// 	모든 숙소유형 정보 전달.
+		// type은 최초 화면 요청할 때 쓰는 이름이고 types는 정보 전달하고, 조건검색으로 선택할 때 쓰는 이름
+		model.addAttribute("types", accommodationService.getAllTypes());
+		// 	모든 지역 정보 전달
+		model.addAttribute("cities", accommodationService.getAllCities());
+		
+		//	type을 전달받은 경우에는 아래 정보도 전달
+		if (!type.isBlank()) {
+			// 선택한 숙소 유형명 전달
+			model.addAttribute("selectedTypeName", accommodationService.getTypeNameById(type));
+			// type에 따른 공용시설 옵션 list 전달
+			model.addAttribute("cofacilities", accommodationService.getCommonFacilityOptions(type));
+			// 객실시설 옵션 list 전달
+			model.addAttribute("rofacilities", accommodationService.getRoomFacilityOptions());
+			// 기타 태그 옵션 list 전달
+			model.addAttribute("tags", accommodationService.getAllAccoTagOptionsByType(type));
+		}
 		
 		return "accommodation/home";
-		
 	}
+
+	
+
 }
