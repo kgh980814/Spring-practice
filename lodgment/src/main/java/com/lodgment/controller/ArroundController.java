@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.lodgment.api.LodgmentAPI;
+import com.lodgment.criteria.LikeCriteria;
+import com.lodgment.domain.User;
 import com.lodgment.service.AccommodationService;
 
 import lombok.AllArgsConstructor;
@@ -57,6 +59,19 @@ public class ArroundController {
 		return "accommodation/home";
 	}
 
-	
+	// 숙소 상세 페이지 뷰 반환
+		@GetMapping(path = "/detail")
+		public String detail(@RequestParam("id") int accoId, Model model) {
+			// 해당 id를 가진 숙소 상세정보와 리뷰 정보, 찜하기 여부를 전달한다.
+			// 숙소의 객실 정보는 restController에서 제공한다.
+			
+			// TODO DTO로 객체 하나에 모든 정보 담아서 모델로 전달하기?
+			// 숙소 정보
+			model.addAttribute("detail", accommodationService.getAccommodationDetailById(accoId));
+			// 객실정원 옵션 정보
+			model.addAttribute("capacities", accommodationService.getAllCapacityOptionsByAccoId(accoId));
+			
+			return "/accommodation/detail";
+		}
 
 }

@@ -580,7 +580,7 @@ $(function () {
 					let content = '';
 					content += '<div id="card-acco-' + acco.id +'" class="card text-bg-light p-0 rounded-0">';
 					content += '	<img src="/resources/images/acco/thumbnail/' + acco.thumbnailImageName +'" class="list-thumbnail card-img img-fluid rounded-0" alt="accommodation thumbnail">';
-					content += '	<a href="acco/detail?id=' + acco.id + '">';
+					content += '	<a href="near/detail?id=' + acco.id + '">';
 					content += '		<div class="list-overlay card-img-overlay p-3 rounded-0 text-light d-flex justify-content-between">';
 					content += '			<div class="my-auto">';
 					content += '				<h5 class="fw-semibold">' + acco.name + '</h5>';
@@ -613,7 +613,7 @@ $(function () {
 					// 마커에 click 이벤트를 등록
 	 				kakao.maps.event.addListener(marker, 'click', function() {
 	 					// 상세조회 페이지로 이동
-	 					location.href= "acco/detail?id=" + acco.id;
+	 					location.href= "near/detail?id=" + acco.id;
 	 				});
 					
 					// 마커에 mouseover, mouseout 이벤트를 등록
