@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.lodgment.api.LodgmentAPI;
 import com.lodgment.criteria.LikeCriteria;
 import com.lodgment.domain.User;
 import com.lodgment.service.AccommodationService;

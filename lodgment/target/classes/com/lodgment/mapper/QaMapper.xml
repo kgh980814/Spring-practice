@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lodgment.mapper.QaMapper">
+
+	<!-- void insertQa(Qa qa); -->
+	<insert id="insertQa" parameterType="com.lodgment.dto.QaDTO">
+		insert into qa
+		(qa_no, user_no, qa_content, qa_title, qa_image)
+		values
+		(qa_seq.nextval, #{userNo}, #{content}, #{title}, #{image})
+	</insert>
+	
+	<!-- List<Qa> getAllQas(); -->
+	<select id="getAllQas" resultType="com.lodgment.domain.QaVO">
+		select
+			qa_no as no, 
+			qa_content as content, 
+			qa_title as title, 
+			qa_image as image
+		from qa
+		order by qa_no = #{no}
+	</select>
+	
+	<select id="getAllQaCategories" resultType="com.lodgment.dto.QaCategoryDTO">
+		select *
+		from qa_categories
+	</select>
+	
+	<!-- List<QaType> getAllQaTypes(); -->
+	<select id="getAllQaTypes" resultType="com.lodgment.dto.QaTypeDTO">
+		select *
+		from qa_type
+	</select>
+	
+	<!-- List<QaDto> getUserQa(String userNo);  -->
+	<select id="getUserQa" parameterType="int" resultType="com.lodgment.dto.QaDTO">
+		select qa_no as no,
+			   user_no,
+			   qa_content as content,
+			   qa_title as title,
+			   qa_created_date as createdDate,
+			   qa_image as image,
+			   qa_answer_status as answerStatus
+		from qa
+		where user_no = #{value}
+		order by qa_created_date desc
+	</select>
+	<!-- List<QaDto> getUserQaByQaNo(String userNo);  -->
+	<select id="getUserQaByQaNo" parameterType="int" resultType="com.lodgment.dto.QaDTO">
+		select q.qa_no as no,
+			   q.user_no,
+			   q.qa_content as content,
+			   q.qa_title as title,
+			   q.qa_created_date as createdDate,
+			   q.qa_image as image,
+			   q.qa_answer_status as answerStatus,
+               a.qa_content as answerContent
+		from qa q, qa_answer a
+		where q.qa_no = #{value}
+        and q.qa_no = a.qa_no
+		order by q.qa_created_date desc
+	</select>
+	<!-- List<QaDto> getQaByNo(int no);  -->
+	<select id="getQaByNo" parameterType="int" resultType="com.lodgment.dto.QaDTO">
+		select qa_no as no,
+			   qa_content as content,
+			   qa_title as title,
+			   qa_created_date as createdDate,
+			   qa_image as image,
+			   qa_answer_status as answerStatus
+		from qa
+		where qa_no = #{value}
+	</select>
+</mapper>

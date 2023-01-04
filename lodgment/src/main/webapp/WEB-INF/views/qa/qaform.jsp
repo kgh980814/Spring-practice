@@ -8,7 +8,7 @@
 <link href="resources/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<title>서울어때</title>
+<title>여기어떄</title>
 </head>
 <style>
 	#content {
@@ -24,7 +24,7 @@
 		<div class="col-10">
 			<form method="post" action="qacomplete" enctype="multipart/form-data">
 				<div class="alter-top">
-					<p class="text-center"><strong>서울어때 이용 중 불편하신 점을 문의해주시면 빠른 시일내에 답변 드리겠습니다.</strong></p>
+					<p class="text-center"><strong>여기어때 이용 중 불편하신 점을 문의해주시면 빠른 시일내에 답변 드리겠습니다.</strong></p>
 				</div>
 				<div class="my-3">
 					<p><strong>제목</strong></p>
