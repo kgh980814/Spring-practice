@@ -103,7 +103,8 @@
 		from accommodations a,
 		(select fr.acco_id, min(fr.room_day_price) minPrice
 		from acco_rooms fr Left join(<include refid="getReservedCountByRoomNo" />) nr
-		on fr.room_no = nr.room_no
+		on 
+		fr.room_no = nr.room_no
 		<where> 
 			(fr.room_numbers - IFNULL(nr.cnt,0)) > 0
 			<if test="capacity >= 0">
@@ -290,10 +291,10 @@
 	
 	<!-- int getAvailableRoomStock(RoomCriteria criteria); -->
 	<select id="getAvailableRoomStock" parameterType="com.lodgment.criteria.RoomCriteria" resultType="int">
-		select (fr.room_numbers - COALESCE(nr.cnt,0)) as stock
-		from acco_rooms fr, (<include refid="getReservedCountByRoomNo" />) nr
-		where fr.room_no = nr.room_no (+)
-		and fr.room_no = #{roomNo}
+		select (fr.room_numbers - IFNULL(nr.cnt,0)) as stock
+		from acco_rooms fr left join (<include refid="getReservedCountByRoomNo" />) nr
+		on (fr.room_no = nr.room_no)
+		where fr.room_no = #{roomNo}
 	</select>
 	
 	<!-- 찜하기 기능 관련 -->
@@ -350,21 +351,20 @@
 	</select>
 	<!-- List<AccommodationRoom> getRoomsByAccoIdwithPagination(RoomCriteria criteria); -->
 	<select id="getRoomsByAccoIdwithPagination" parameterType="com.lodgment.criteria.RoomCriteria" resultMap="RoomDetailResultMap">
-		select *
-		from (select row_number() over(order by a.room_capacity, a.room_no) row_num, a.*
+				select a.*
 				from acco_rooms a
 				<if test="onlyAvailable == 'yes'">
-					, (<include refid="getReservedCountByRoomNo" />) rc
-				</if>
+				Left join (<include refid="getReservedCountByRoomNo" />) rc
+				on a.room_no = rc.room_no 
 				where a.acco_id = #{accoId}
-				<if test="onlyAvailable == 'yes'">
-					and a.room_no = rc.room_no (+)
-					and (a.room_numbers - COALESCE(rc.cnt,0)) > 0
+				and(a.room_numbers - IFNULL(rc.cnt,0)) > 0
 				</if>
 				<if test="capacity != 0">
 					and a.room_capacity = #{capacity}
-				</if>)
-		where row_num between #{beginIndex} and #{endIndex}
+				</if>
+				order by room_no
+				LIMIT #{beginIndex}, #{endIndex}
+				
 	</select>
 <!-- void updateAccommodation(Accommodation accommodation); -->
 	<update id="updateAccommodation" parameterType="com.lodgment.domain.Accommodation">
@@ -383,7 +383,7 @@
 			acco_like_count = #{likeCount},
 			acco_deleted = #{deleted},
 			city_id = #{cityId},
-			acco_updated_date = sysdate
+			acco_updated_date = now()
 		where acco_id = #{id}
 	</update>
 </mapper>

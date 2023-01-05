@@ -384,7 +384,7 @@
 										<c:forEach var="item" items="${accommodationReviews }">
 											<tr>
 												<td class="p-3 align-middle">
-													<a class="text-muted" href="/acco/detail?id=${item.acco.id }">${item.acco.name }</a>
+													<a class="text-muted" href="/near/detail?id=${item.acco.id }">${item.acco.name }</a>
 												</td>
 												<td class="p-3 align-middle">
 													<a class="text-muted" href="/reviewmodify?no=${item.no }">${item.title }</a>
