@@ -52,7 +52,6 @@
    				<ul class="dropdown-menu">
     				<li><a class="dropdown-item" href="/qaform">1:1 문의</a></li>
      				<li><a class="dropdown-item" href="/near/best">핫한 숙소</a></li>
-     				<li><a class="dropdown-item" href="/restaurant">인기 맛집</a></li>
    				</ul>
 			</li>
 			<li class="nav-item dropdown ${empty LOGIN_USER ? 'd-none' : ''}" style="width:80px;height:auto">
