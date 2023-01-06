@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Alias("QaDto")
+@Alias("QaDTO")
 public class QaDTO {
 
 	private int no;						// QA 글 번호

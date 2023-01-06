@@ -332,10 +332,9 @@
 <!-- List<Accommodation> getBestAccommodations(int count); -->
 	<select id="getBestAccommodations" parameterType="int" resultMap="AccoResultMap">
 		select *
-		from (select *
 		    from accommodations
-		    order by acco_review_rate desc, acco_like_count desc)
-		where rownum &lt;= #{value}
+		    order by acco_review_rate desc, acco_like_count desc
+		LIMIT  #{value}
 	</select>
 	
 	

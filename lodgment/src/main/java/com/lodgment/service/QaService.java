@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +23,6 @@ import com.lodgment.mapper.QaMapper;
 public class QaService {
 	
 	// 문의사항 이미지 저장 디렉토리
-	@Value("${seoul.qa.image.save-directory}")
-	String qaImageSaveDirectory;
 
 	@Autowired
 	private QaMapper qaMapper;
@@ -36,7 +35,7 @@ public class QaService {
 			qaDto.setImage(filename);
 			
 			InputStream in = imageFile.getInputStream();
-			FileOutputStream out = new FileOutputStream(new File(qaImageSaveDirectory, filename));
+			FileOutputStream out = new FileOutputStream(new File("/src/main/webapp/resources/images/qa", filename));
 			
 			FileCopyUtils.copy(in, out);
 		}

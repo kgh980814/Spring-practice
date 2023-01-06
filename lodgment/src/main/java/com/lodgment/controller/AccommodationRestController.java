@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,6 +47,12 @@ public class AccommodationRestController {
 	public Pagination pagination(RoomCriteria criteria) {
 		return accommodationService.generatePagination(criteria);
 	}
-	
+	@GetMapping(path = "/best")
+	public String best(Model model) {
+		// 가장 평점이 높은 숙소 상위 5건 조회
+		List<Accommodation> bestAccos = accommodationService.getBestAccommodations(5);
+		model.addAttribute("bests", bestAccos);
+		return "/accommodation/best";
+	}
 
 }

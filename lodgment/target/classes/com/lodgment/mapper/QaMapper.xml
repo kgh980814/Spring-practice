@@ -7,7 +7,7 @@
 		insert into qa
 		(qa_no, user_no, qa_content, qa_title, qa_image)
 		values
-		(qa_seq.nextval, #{userNo}, #{content}, #{title}, #{image})
+		(MAX(qa_no)+1, #{userNo}, #{content}, #{title}, #{image})
 	</insert>
 	
 	<!-- List<Qa> getAllQas(); -->

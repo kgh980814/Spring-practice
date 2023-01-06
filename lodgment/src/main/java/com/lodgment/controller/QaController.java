@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.lodgment.annotation.LoginUser;
+import com.lodgment.domain.User;
 import com.lodgment.dto.QaDTO;
 import com.lodgment.service.QaService;
+
+
 
 
 
@@ -50,9 +54,9 @@ public class QaController {
 	}
 	
 	@PostMapping(path = "/qacomplete")
-	public String qaCompleted(@ModelAttribute("qaDto") QaDTO qaDto, SessionStatus sessionStatus) throws IOException {
+	public String qaCompleted(@LoginUser User user,@ModelAttribute("qaDto") QaDTO qaDto, SessionStatus sessionStatus) throws IOException {
 		
-		
+		qaDto.setUserNo(user.getNo());
 		qaService.addNewQa(qaDto);
 		
 		sessionStatus.setComplete();
